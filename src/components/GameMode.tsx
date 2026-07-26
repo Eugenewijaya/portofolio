@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { X, ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from 'lucide-react'
-import { PROFILE } from '../data'
+
 
 type Position = { x: number; y: number }
 type Building = { id: string; name: string; pos: Position; width: number; height: number; color: string; path: string }
