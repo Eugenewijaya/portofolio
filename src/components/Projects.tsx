@@ -2,8 +2,8 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { useGitHubRepos, getLanguageColor, timeAgo } from '../github'
-import { ExternalLink, Github, Star, GitFork, Layers } from 'lucide-react'
-
+import { ExternalLink, Star, GitFork, Layers } from 'lucide-react'
+import { Github } from './Icons'
 export default function Projects() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })

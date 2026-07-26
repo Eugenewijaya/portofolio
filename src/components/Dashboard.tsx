@@ -8,10 +8,10 @@ import {
   useContributionMap,
   getLanguageColor,
   timeAgo,
-  GHEvent,
+  type GHEvent,
 } from '../github'
-import { Github, GitCommit, Star, GitFork, Users, BookOpen, Activity, RefreshCw } from 'lucide-react'
-
+import { Star, Users, BookOpen, Activity, RefreshCw } from 'lucide-react'
+import { Github } from './Icons'
 function StatCard({ label, value, icon: Icon, color }: { label: string; value: string | number; icon: React.ElementType; color: string }) {
   return (
     <div className="glass-card border-gradient p-5 flex flex-col gap-2 cursor-default">

@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { Menu, X, Github, Linkedin, Mail, ExternalLink } from 'lucide-react'
+import { Menu, X, Mail, ExternalLink } from 'lucide-react'
+import { Github, Linkedin } from './Icons'
 import { PROFILE } from '../data'
 
 const links = [

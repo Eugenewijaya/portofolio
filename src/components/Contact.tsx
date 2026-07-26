@@ -2,7 +2,8 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { PROFILE } from '../data'
-import { Mail, Github, Linkedin, ExternalLink, Send } from 'lucide-react'
+import { Mail, ExternalLink, Send } from 'lucide-react'
+import { Github, Linkedin } from './Icons'
 
 export default function Contact() {
   const ref = useRef(null)
