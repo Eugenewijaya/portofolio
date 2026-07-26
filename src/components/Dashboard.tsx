@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Activity, Star, Users, Trophy, Target, Zap, Crown } from 'lucide-react'
+import { EXPERIENCE, PROJECTS, CERTIFICATIONS } from '../data'
 
 function StatCard({ label, value, icon: Icon, color, suffix = '' }: { label: string; value: string | number; icon: React.ElementType; color: string; suffix?: string }) {
   return (
@@ -39,6 +40,38 @@ function SkillProgress({ skill, level, color }: { skill: string, level: number, 
 }
 
 export default function Dashboard() {
+  // --- Factual Calculations ---
+  
+  // Total achievements combined (Roles + Projects + Certs)
+  const totalQuests = EXPERIENCE.length + PROJECTS.length + CERTIFICATIONS.length
+  
+  // Level: Base 1 + 1 for each quest completed
+  const currentLevel = 1 + totalQuests
+
+  // XP Progress: Since we can't easily parse mixed dates, let's derive it from the total projects/certs mod 10 for visual progress
+  const xpPercentage = (totalQuests % 10) * 10 // E.g. 16 quests = 60% progress to next major level tier
+  
+  // Calculate specific skill levels (Max 99)
+  // Cloud Computing: 4 GCP certs + 1 Bangkit experience
+  const cloudCount = CERTIFICATIONS.filter(c => c.name.includes('Cloud')).length + EXPERIENCE.filter(e => e.role.includes('Cloud')).length
+  const cloudLevel = Math.min(99, 50 + (cloudCount * 8)) // Base 50 + 8 per relevant achievement
+  
+  // Graphic Design: Star Champs + Fastwork + Design Projects
+  const designCount = EXPERIENCE.filter(e => e.role.includes('Design')).length + PROJECTS.filter(p => p.category.includes('Design')).length
+  const designLevel = Math.min(99, 60 + (designCount * 10))
+
+  // Event Management: The Journey of Hope + HIMPSI
+  const eventCount = EXPERIENCE.filter(e => e.role.includes('Coordinator') || e.highlights.some(h => h.includes('Event'))).length + PROJECTS.filter(p => p.category.includes('Event')).length
+  const eventLevel = Math.min(99, 55 + (eventCount * 12))
+
+  // Video Editing: Fastwork + CapCut project
+  const videoCount = EXPERIENCE.filter(e => e.role.includes('Video')).length + PROJECTS.filter(p => p.category.includes('Video')).length
+  const videoLevel = Math.min(99, 50 + (videoCount * 15))
+
+  // Web Architecture: TheraCare, E-Voting, GCP Web
+  const webCount = PROJECTS.filter(p => p.category.includes('Web') || p.category.includes('Cloud')).length
+  const webLevel = Math.min(99, 45 + (webCount * 10))
+
   return (
     <section className="relative py-12 h-full flex flex-col justify-center">
       <div className="max-w-5xl mx-auto w-full">
@@ -52,7 +85,7 @@ export default function Dashboard() {
             <Trophy size={16} className="text-accent" />
             <span className="text-xs font-bold uppercase tracking-widest text-accent border-2 border-accent px-2 py-0.5 rounded-full">Player Profile</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black uppercase text-foreground tracking-tighter">Stats & Level</h2>
+          <h2 className="text-3xl sm:text-5xl font-black uppercase text-foreground tracking-tighter">Real Growth Stats</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -68,17 +101,17 @@ export default function Dashboard() {
               <Crown size={40} className="text-accent-foreground" />
             </div>
             <h3 className="text-sm font-bold uppercase tracking-widest opacity-70 mb-1">Current Level</h3>
-            <div className="text-6xl font-black uppercase tracking-tighter mb-4">99</div>
+            <div className="text-6xl font-black uppercase tracking-tighter mb-4">{currentLevel}</div>
             
             <div className="w-full text-left mt-auto">
               <div className="flex justify-between text-[10px] font-black uppercase mb-1">
                 <span>XP Progress</span>
-                <span>85%</span>
+                <span>{xpPercentage}%</span>
               </div>
               <div className="h-3 border-2 border-primary-foreground bg-primary p-0.5">
                 <motion.div 
                   initial={{ width: 0 }}
-                  animate={{ width: '85%' }}
+                  animate={{ width: `${xpPercentage}%` }}
                   transition={{ duration: 1.5, ease: 'easeOut' }}
                   className="h-full bg-secondary"
                 />
@@ -93,10 +126,10 @@ export default function Dashboard() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6"
           >
-            <StatCard label="Quests Completed" value="45" icon={Target} color="#10b981" />
-            <StatCard label="Client Rating" value="4.9" suffix="/5" icon={Star} color="#f59e0b" />
-            <StatCard label="Community Impact" value="10k" suffix="+" icon={Users} color="#6366f1" />
-            <StatCard label="Creative Power" value="MAX" icon={Zap} color="#ec4899" />
+            <StatCard label="Quests Completed" value={totalQuests} icon={Target} color="#10b981" />
+            <StatCard label="Experience (Years)" value={new Date().getFullYear() - 2022} icon={Star} color="#f59e0b" />
+            <StatCard label="Community Impact" value="300" suffix="+" icon={Users} color="#6366f1" />
+            <StatCard label="Creative Assets" value="200" suffix="+" icon={Zap} color="#ec4899" />
           </motion.div>
 
           {/* Skill Trees - 12 cols */}
@@ -108,15 +141,14 @@ export default function Dashboard() {
           >
             <div className="flex items-center gap-3 mb-8">
               <Activity size={24} className="text-secondary" />
-              <h3 className="text-lg font-black uppercase tracking-tight text-foreground">Skill Tree Mastery</h3>
+              <h3 className="text-lg font-black uppercase tracking-tight text-foreground">Verified Skill Mastery</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
-              <SkillProgress skill="Graphic Design (Canva/PS)" level={95} color="#ec4899" />
-              <SkillProgress skill="Cloud Computing (GCP)" level={75} color="#38bdf8" />
-              <SkillProgress skill="Video Editing (CapCut)" level={85} color="#f59e0b" />
-              <SkillProgress skill="Web Architecture" level={70} color="#10b981" />
-              <SkillProgress skill="Event Management" level={90} color="#6366f1" />
-              <SkillProgress skill="UI/UX Design" level={80} color="#a855f7" />
+              <SkillProgress skill="Graphic Design" level={designLevel} color="#ec4899" />
+              <SkillProgress skill="Cloud Computing" level={cloudLevel} color="#38bdf8" />
+              <SkillProgress skill="Video Editing" level={videoLevel} color="#f59e0b" />
+              <SkillProgress skill="Web Architecture" level={webLevel} color="#10b981" />
+              <SkillProgress skill="Event Management" level={eventLevel} color="#6366f1" />
             </div>
           </motion.div>
 

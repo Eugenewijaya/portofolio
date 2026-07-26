@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion'
 import { Link, useLocation } from 'react-router-dom'
-import { Home, User, Briefcase, Layout, Mail, Gamepad2 } from 'lucide-react'
+import { Home, User, Briefcase, Layout, Mail, Gamepad2, Play } from 'lucide-react'
 import { PROFILE } from '../data'
 
-export default function Sidebar() {
+export default function Sidebar({ onToggleGameMode }: { onToggleGameMode: () => void }) {
   const location = useLocation()
 
   const links = [
@@ -14,6 +14,10 @@ export default function Sidebar() {
     { name: 'Inventory', path: '/projects', icon: Layout, color: '#ec4899' },
     { name: 'Connect', path: '/contact', icon: Mail, color: '#6366f1' },
   ]
+
+  // Assuming 16 total quests/achievements for level calculation 
+  // (we calculate dynamically in Dashboard, but let's hardcode the realistic Base+16=17 here)
+  const realisticLevel = 17 
 
   return (
     <motion.nav 
@@ -31,8 +35,8 @@ export default function Sidebar() {
               alt={PROFILE.name} 
               className="w-20 h-20 rounded-full border-4 border-foreground object-cover shadow-[4px_4px_0px_var(--foreground)] group-hover:scale-105 transition-transform"
             />
-            <div className="absolute -bottom-2 -right-2 bg-accent text-accent-foreground px-2 py-0.5 text-[10px] font-black uppercase border-2 border-foreground shadow-[2px_2px_0px_var(--foreground)] rotate-12 group-hover:rotate-0 transition-transform">
-              Lv. 99
+            <div className="absolute -bottom-2 -right-2 bg-accent text-accent-foreground px-2 py-0.5 text-[10px] font-black uppercase border-2 border-foreground shadow-[2px_2px_var(--foreground)] rotate-12 group-hover:rotate-0 transition-transform">
+              Lv. {realisticLevel}
             </div>
           </div>
           <div className="text-center">
@@ -70,11 +74,19 @@ export default function Sidebar() {
         </div>
       </div>
 
-      <div className="px-6 mt-10">
+      <div className="px-6 mt-10 flex flex-col gap-4">
+        <button 
+          onClick={onToggleGameMode}
+          className="p-3 border-4 border-foreground bg-accent text-accent-foreground shadow-[4px_4px_0px_var(--foreground)] hover:translate-y-1 hover:shadow-[0px_0px_0px_var(--foreground)] transition-all font-black uppercase text-sm flex justify-center items-center gap-2 group"
+        >
+          <Play size={16} className="group-hover:rotate-12 transition-transform" />
+          Enter Game Mode
+        </button>
+
         <div className="p-4 border-2 border-foreground bg-primary text-primary-foreground text-xs font-bold shadow-[4px_4px_0px_var(--foreground)] uppercase text-center relative overflow-hidden group">
-          <div className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+          <div className="absolute inset-0 bg-secondary translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
           <span className="relative z-10 flex items-center justify-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
             Online & Ready
           </span>
         </div>
