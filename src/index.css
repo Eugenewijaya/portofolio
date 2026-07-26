@@ -103,7 +103,6 @@
 
 @layer utilities {
   .liquid-glass {
-    background: var(--glass-bg);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 3px solid hsl(var(--glass-border));
@@ -112,6 +111,28 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
   }
   
+  /* Use a default glass background if no tailwind bg utility is applied */
+  .liquid-glass:not([class*="bg-"]) {
+    background: var(--glass-bg);
+  }
+  
+  /* Ensure backgrounds applied via Tailwind also get some translucency if we want them to act like glass */
+  .liquid-glass.bg-primary {
+    background: hsla(var(--primary) / 0.85);
+  }
+  
+  .liquid-glass.bg-secondary {
+    background: hsla(var(--secondary) / 0.85);
+  }
+  
+  .liquid-glass.bg-accent {
+    background: hsla(var(--accent) / 0.85);
+  }
+  
+  .liquid-glass.bg-background {
+    background: hsla(var(--background) / 0.85);
+  }
+
   .liquid-glass:hover {
     transform: translate(-4px, -4px);
     box-shadow: 10px 10px 0px 0px hsl(var(--glass-shadow));

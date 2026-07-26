@@ -156,7 +156,7 @@ export default function GameMode({ onClose }: { onClose: () => void }) {
 
         {/* Player */}
         <div
-          className="absolute z-20 flex flex-col items-center transition-all duration-150 ease-linear"
+          className="absolute z-20 flex flex-col items-center justify-center transition-all duration-150 ease-linear"
           style={{
             left: playerPos.x * TILE_SIZE,
             top: playerPos.y * TILE_SIZE,
@@ -164,9 +164,27 @@ export default function GameMode({ onClose }: { onClose: () => void }) {
             height: TILE_SIZE,
           }}
         >
-          {/* Neo-brutalism Player block */}
-          <div className="w-8 h-8 bg-foreground border-2 border-background shadow-[2px_2px_0px_var(--background)] relative flex items-center justify-center overflow-hidden">
-             <img src={PROFILE.avatar} className="w-full h-full object-cover filter grayscale sepia brightness-110" alt="player" />
+          {/* RPG Pixel Art Hero SVG */}
+          <div className="w-10 h-10 -mt-4 relative animate-bounce">
+            <svg viewBox="0 0 16 16" className="w-full h-full drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">
+              {/* Hair / Hat */}
+              <rect x="5" y="1" width="6" height="2" fill="var(--color-primary)" />
+              <rect x="4" y="2" width="8" height="2" fill="var(--color-primary)" />
+              {/* Face */}
+              <rect x="5" y="4" width="6" height="4" fill="#fcd34d" />
+              {/* Eyes */}
+              <rect x="6" y="5" width="1" height="1" fill="#000" />
+              <rect x="9" y="5" width="1" height="1" fill="#000" />
+              {/* Body / Armor */}
+              <rect x="4" y="8" width="8" height="5" fill="var(--color-accent)" />
+              <rect x="7" y="8" width="2" height="5" fill="var(--color-secondary)" />
+              {/* Arms */}
+              <rect x="3" y="8" width="1" height="4" fill="#fcd34d" />
+              <rect x="12" y="8" width="1" height="4" fill="#fcd34d" />
+              {/* Legs */}
+              <rect x="5" y="13" width="2" height="2" fill="var(--color-primary)" />
+              <rect x="9" y="13" width="2" height="2" fill="var(--color-primary)" />
+            </svg>
           </div>
         </div>
       </div>
