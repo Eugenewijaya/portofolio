@@ -130,65 +130,66 @@ export default function GameMode({ onClose }: { onClose: () => void }) {
             backgroundPosition: '-2px -2px'
           }}
         >
-        {/* Buildings */}
-        {BUILDINGS.map(b => (
+          {/* Buildings */}
+          {BUILDINGS.map(b => (
+            <div
+              key={b.id}
+              className="absolute border-4 border-foreground shadow-[4px_4px_0px_var(--foreground)] flex items-center justify-center flex-col transition-all"
+              style={{
+                left: b.pos.x * TILE_SIZE,
+                top: b.pos.y * TILE_SIZE,
+                width: b.width * TILE_SIZE - 4,
+                height: b.height * TILE_SIZE - 4,
+                backgroundColor: b.color,
+                filter: activeBuilding?.id === b.id ? 'brightness(1.2)' : 'none',
+                transform: activeBuilding?.id === b.id ? 'scale(1.05)' : 'scale(1)',
+                zIndex: 10
+              }}
+            >
+              <span className="font-black uppercase text-[10px] sm:text-xs text-foreground bg-background px-1 border-2 border-foreground">{b.name}</span>
+              {activeBuilding?.id === b.id && (
+                <span className="absolute -top-6 bg-background text-foreground px-2 py-0.5 text-[8px] font-black uppercase border-2 border-foreground whitespace-nowrap animate-bounce">
+                  Press Space!
+                </span>
+              )}
+            </div>
+          ))}
+
+          {/* Player */}
           <div
-            key={b.id}
-            className="absolute border-4 border-foreground shadow-[4px_4px_0px_var(--foreground)] flex items-center justify-center flex-col transition-all"
+            className="absolute z-20 flex flex-col items-center justify-center transition-all duration-150 ease-linear"
             style={{
-              left: b.pos.x * TILE_SIZE,
-              top: b.pos.y * TILE_SIZE,
-              width: b.width * TILE_SIZE - 4,
-              height: b.height * TILE_SIZE - 4,
-              backgroundColor: b.color,
-              filter: activeBuilding?.id === b.id ? 'brightness(1.2)' : 'none',
-              transform: activeBuilding?.id === b.id ? 'scale(1.05)' : 'scale(1)',
-              zIndex: 10
+              left: playerPos.x * TILE_SIZE,
+              top: playerPos.y * TILE_SIZE,
+              width: TILE_SIZE,
+              height: TILE_SIZE,
             }}
           >
-            <span className="font-black uppercase text-[10px] sm:text-xs text-foreground bg-background px-1 border-2 border-foreground">{b.name}</span>
-            {activeBuilding?.id === b.id && (
-              <span className="absolute -top-6 bg-background text-foreground px-2 py-0.5 text-[8px] font-black uppercase border-2 border-foreground whitespace-nowrap animate-bounce">
-                Press Space!
-              </span>
-            )}
+            {/* RPG Pixel Art Hero SVG */}
+            <div className="w-10 h-10 -mt-4 relative animate-bounce">
+              <svg viewBox="0 0 16 16" className="w-full h-full drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">
+                {/* Hair / Hat */}
+                <rect x="5" y="1" width="6" height="2" fill="var(--color-primary)" />
+                <rect x="4" y="2" width="8" height="2" fill="var(--color-primary)" />
+                {/* Face */}
+                <rect x="5" y="4" width="6" height="4" fill="#fcd34d" />
+                {/* Eyes */}
+                <rect x="6" y="5" width="1" height="1" fill="#000" />
+                <rect x="9" y="5" width="1" height="1" fill="#000" />
+                {/* Body / Armor */}
+                <rect x="4" y="8" width="8" height="5" fill="var(--color-accent)" />
+                <rect x="7" y="8" width="2" height="5" fill="var(--color-secondary)" />
+                {/* Arms */}
+                <rect x="3" y="8" width="1" height="4" fill="#fcd34d" />
+                <rect x="12" y="8" width="1" height="4" fill="#fcd34d" />
+                {/* Legs */}
+                <rect x="5" y="13" width="2" height="2" fill="var(--color-primary)" />
+                <rect x="9" y="13" width="2" height="2" fill="var(--color-primary)" />
+              </svg>
+            </div>
           </div>
-        ))}
-
-        {/* Player */}
-        <div
-          className="absolute z-20 flex flex-col items-center justify-center transition-all duration-150 ease-linear"
-          style={{
-            left: playerPos.x * TILE_SIZE,
-            top: playerPos.y * TILE_SIZE,
-            width: TILE_SIZE,
-            height: TILE_SIZE,
-          }}
-        >
-          {/* RPG Pixel Art Hero SVG */}
-          <div className="w-10 h-10 -mt-4 relative animate-bounce">
-            <svg viewBox="0 0 16 16" className="w-full h-full drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">
-              {/* Hair / Hat */}
-              <rect x="5" y="1" width="6" height="2" fill="var(--color-primary)" />
-              <rect x="4" y="2" width="8" height="2" fill="var(--color-primary)" />
-              {/* Face */}
-              <rect x="5" y="4" width="6" height="4" fill="#fcd34d" />
-              {/* Eyes */}
-              <rect x="6" y="5" width="1" height="1" fill="#000" />
-              <rect x="9" y="5" width="1" height="1" fill="#000" />
-              {/* Body / Armor */}
-              <rect x="4" y="8" width="8" height="5" fill="var(--color-accent)" />
-              <rect x="7" y="8" width="2" height="5" fill="var(--color-secondary)" />
-              {/* Arms */}
-              <rect x="3" y="8" width="1" height="4" fill="#fcd34d" />
-              <rect x="12" y="8" width="1" height="4" fill="#fcd34d" />
-              {/* Legs */}
-              <rect x="5" y="13" width="2" height="2" fill="var(--color-primary)" />
-              <rect x="9" y="13" width="2" height="2" fill="var(--color-primary)" />
-            </svg>
         </div>
       </div>
-    </div>
 
       {/* Mobile D-Pad (Visible only on small screens) */}
       <div className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 grid grid-cols-3 gap-1.5 z-20">
