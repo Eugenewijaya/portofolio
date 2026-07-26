@@ -44,7 +44,7 @@ export default function Sidebar() {
           />
           <div>
             <h1 className="text-sm font-black uppercase text-foreground leading-tight">{currentProfile.name}</h1>
-            <span className="text-[9px] font-black uppercase text-accent">Lv. {realisticLevel}</span>
+            <span className="text-[9px] font-black uppercase text-accent">Professional</span>
           </div>
         </Link>
 
@@ -124,17 +124,14 @@ export default function Sidebar() {
               alt={currentProfile.name} 
               className="w-20 h-20 rounded-full border border-foreground/20 object-cover shadow-xl group-hover:scale-105 transition-transform"
             />
-            <div className="absolute -bottom-2 -right-2 liquid-glass bg-accent/80 text-accent-foreground px-2 py-0.5 text-[10px] font-black uppercase rotate-12 group-hover:rotate-0 transition-transform">
-              Lv. {realisticLevel}
-            </div>
           </div>
           <div className="text-center">
             <h1 className="text-xl font-black uppercase text-foreground">{currentProfile.name}</h1>
-            <p className="text-[10px] font-bold text-foreground/60 uppercase tracking-widest mt-1">Creative Player</p>
+            <p className="text-[10px] font-bold text-foreground/60 uppercase tracking-widest mt-1">Creative Professional</p>
           </div>
         </Link>
 
-        {/* Gamified Menu */}
+        {/* Navigation Menu */}
         <div className="flex flex-col gap-2">
           {links.map((link) => {
             const isActive = location.pathname === link.path

@@ -50,13 +50,13 @@ export default function Dashboard() {
   const certEn = CERTIFICATIONS.en
 
   // Total achievements combined (Roles + Projects + Certs)
-  const totalQuests = expEn.length + projEn.length + certEn.length
+  const totalAchievements = expEn.length + projEn.length + certEn.length
   
-  // Level: Base 1 + 1 for each quest completed
-  const currentLevel = 1 + totalQuests
+  // Score: Base 10 + 5 for each achievement
+  const currentScore = 10 + (totalAchievements * 5)
 
   // XP Progress: derive it from the total projects/certs mod 10 for visual progress
-  const xpPercentage = (totalQuests % 10) * 10 
+  const progressPercentage = (totalAchievements % 10) * 10 
   
   // Calculate specific skill levels (Max 99)
   const cloudCount = certEn.filter(c => c.name.includes('Cloud')).length + expEn.filter(e => e.role.includes('Cloud')).length
@@ -85,10 +85,10 @@ export default function Dashboard() {
         <div className="flex items-center gap-3 mb-3">
           <Trophy size={16} className="text-accent" />
           <span className="text-xs font-bold uppercase tracking-widest text-accent border border-accent/30 px-3 py-1 rounded-full liquid-glass bg-accent/10">
-            Player Profile
+            Professional Profile
           </span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-black uppercase text-foreground tracking-tighter">Real Growth Stats</h2>
+        <h2 className="text-3xl sm:text-5xl font-black uppercase text-foreground tracking-tighter">Growth & Impact</h2>
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -103,18 +103,18 @@ export default function Dashboard() {
           <div className="w-24 h-24 rounded-2xl liquid-glass bg-accent/20 flex items-center justify-center mb-6 rotate-3 border-accent/30">
             <Crown size={40} className="text-accent" />
           </div>
-          <h3 className="text-sm font-bold uppercase tracking-widest opacity-70 mb-1">Current Level</h3>
-          <div className="text-6xl font-black uppercase tracking-tighter mb-4">{currentLevel}</div>
+          <h3 className="text-sm font-bold uppercase tracking-widest opacity-70 mb-1">Impact Score</h3>
+          <div className="text-6xl font-black uppercase tracking-tighter mb-4">{currentScore}</div>
           
           <div className="w-full text-left mt-auto">
             <div className="flex justify-between text-[10px] font-black uppercase mb-1">
-              <span>XP Progress</span>
-              <span>{xpPercentage}%</span>
+              <span>Goal Progress</span>
+              <span>{progressPercentage}%</span>
             </div>
             <div className="h-3 rounded-full liquid-glass p-0.5 bg-black/10 overflow-hidden">
               <motion.div 
                 initial={{ width: 0 }}
-                animate={{ width: `${xpPercentage}%` }}
+                animate={{ width: `${progressPercentage}%` }}
                 transition={{ duration: 1.5, ease: 'easeOut' }}
                 className="h-full bg-secondary"
               />
@@ -129,7 +129,7 @@ export default function Dashboard() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6"
         >
-          <StatCard label="Quests Completed" value={totalQuests} icon={Target} color="#10b981" />
+          <StatCard label="Completed Projects" value={totalAchievements} icon={Target} color="#10b981" />
           <StatCard label="Experience (Years)" value={new Date().getFullYear() - 2022} icon={Star} color="#f59e0b" />
           <StatCard label="Community Impact" value="300" suffix="+" icon={Users} color="#6366f1" />
           <StatCard label="Creative Assets" value="200" suffix="+" icon={Zap} color="#ec4899" />

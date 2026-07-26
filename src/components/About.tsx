@@ -20,7 +20,7 @@ export default function About() {
         <div className="flex items-center gap-3 mb-3">
           <Zap size={16} className="text-secondary" />
           <span className="text-xs font-bold uppercase tracking-widest text-secondary border border-secondary/30 px-3 py-1 rounded-full liquid-glass bg-secondary/10">
-            Character Profile
+            Profile Overview
           </span>
         </div>
         <h2 className="text-3xl sm:text-5xl font-black uppercase text-foreground mb-3 tracking-tighter">

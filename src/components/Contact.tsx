@@ -21,7 +21,7 @@ export default function Contact() {
           <div className="flex items-center gap-3 mb-3">
             <Send size={16} className="text-primary" />
             <span className="text-xs font-bold uppercase tracking-widest text-primary border border-primary/30 px-3 py-1 rounded-full liquid-glass bg-primary/10">
-              Comms Channel
+              Contact Information
             </span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black uppercase text-foreground mb-3 tracking-tighter">

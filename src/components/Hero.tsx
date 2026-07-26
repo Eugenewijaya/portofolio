@@ -21,7 +21,7 @@ export default function Hero() {
         >
           <div className="absolute top-4 left-4">
             <span className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest bg-foreground/10 text-foreground border border-foreground/20 rounded-full liquid-glass">
-              Player 1 Start
+              Welcome
             </span>
           </div>
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9] mt-8">
@@ -63,7 +63,7 @@ export default function Hero() {
         >
           <MapPin size={32} className="text-primary-foreground group-hover:animate-bounce" />
           <div>
-            <p className="text-[10px] font-bold text-foreground/70 uppercase mb-1 tracking-widest">Base Camp</p>
+            <p className="text-[10px] font-bold text-foreground/70 uppercase mb-1 tracking-widest">Location</p>
             <p className="text-xl font-bold text-foreground uppercase leading-tight">{currentProfile.location}</p>
           </div>
         </motion.div>
