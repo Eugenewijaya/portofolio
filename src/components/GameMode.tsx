@@ -186,9 +186,9 @@ export default function GameMode({ onClose }: { onClose: () => void }) {
               <rect x="5" y="13" width="2" height="2" fill="var(--color-primary)" />
               <rect x="9" y="13" width="2" height="2" fill="var(--color-primary)" />
             </svg>
-          </div>
         </div>
       </div>
+    </div>
 
       {/* Mobile D-Pad (Visible only on small screens) */}
       <div className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 grid grid-cols-3 gap-1.5 z-20">
