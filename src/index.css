@@ -35,7 +35,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 95%; /* Off-white for light mode */
+    --background: 240 10% 98%; /* Softer off-white */
     --foreground: 240 10% 10%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 10%;
@@ -54,22 +54,17 @@
     --border: 240 10% 10%; /* Solid black for Brutalism */
     --input: 240 10% 10%;
     --ring: 240 10% 10%;
-    --chart-1: 340 80% 60%;
-    --chart-2: 45 90% 50%;
-    --chart-3: 160 84% 39%;
-    --chart-4: 210 90% 55%;
-    --chart-5: 280 80% 60%;
-    --radius: 0.75rem; /* Rounded but still stark */
+    --radius: 0.75rem;
     
     /* Liquid Glass Light */
-    --glass-bg: rgba(255, 255, 255, 0.5);
+    --glass-bg: rgba(255, 255, 255, 0.6);
     --glass-border: var(--foreground);
     --glass-shadow: var(--foreground);
-    --glass-blur: 16px;
+    --glass-blur: 24px;
   }
 
   .dark {
-    --background: 240 10% 10%; /* Very dark gray */
+    --background: 240 10% 10%;
     --foreground: 0 0% 95%;
     --card: 240 10% 10%;
     --card-foreground: 0 0% 95%;
@@ -88,17 +83,12 @@
     --border: 0 0% 95%; /* Solid white for Brutalism in dark mode */
     --input: 0 0% 95%;
     --ring: 0 0% 95%;
-    --chart-1: 340 80% 60%;
-    --chart-2: 45 90% 50%;
-    --chart-3: 160 84% 39%;
-    --chart-4: 210 90% 55%;
-    --chart-5: 280 80% 60%;
-
+    
     /* Liquid Glass Dark */
-    --glass-bg: rgba(26, 26, 26, 0.4);
+    --glass-bg: rgba(26, 26, 26, 0.5);
     --glass-border: var(--foreground);
     --glass-shadow: var(--foreground);
-    --glass-blur: 16px;
+    --glass-blur: 24px;
   }
 }
 
@@ -107,7 +97,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased transition-colors duration-500;
+    @apply bg-background text-foreground antialiased transition-colors duration-500 overflow-x-hidden;
   }
 }
 
@@ -127,9 +117,31 @@
     box-shadow: 10px 10px 0px 0px hsl(var(--glass-shadow));
   }
   
+  /* Sidebar game-like menu item */
+  .game-menu-item {
+    @apply relative px-4 py-3 font-black uppercase text-sm tracking-wider flex items-center gap-3 transition-all duration-300;
+    border-left: 4px solid transparent;
+  }
+
+  .game-menu-item:hover {
+    @apply text-accent bg-foreground/5;
+    border-left: 4px solid hsl(var(--accent));
+    transform: translateX(4px);
+  }
+
+  .game-menu-item.active {
+    @apply text-secondary bg-foreground/10;
+    border-left: 4px solid hsl(var(--secondary));
+    text-shadow: 0 0 10px hsl(var(--secondary) / 0.5);
+  }
+
+  .game-menu-item:active {
+    transform: translateX(2px) scale(0.98);
+  }
+
   /* Solid Brutal Button */
   .brutal-btn {
-    @apply font-bold px-6 py-3 rounded-lg border-3 border-border transition-all duration-200 cursor-pointer;
+    @apply font-black uppercase tracking-wider px-6 py-3 rounded-lg border-2 border-border transition-all duration-200 cursor-pointer;
     box-shadow: 4px 4px 0px 0px hsl(var(--glass-shadow));
   }
   
@@ -146,13 +158,9 @@
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-accent via-secondary to-primary;
   }
-  
-  .dark .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent via-secondary to-primary;
-  }
 }
 
-/* Brutalist Grid Background */
+/* Natural Liquid Aurora Background (No AI Lines) */
 .bg-mesh {
   position: fixed;
   top: 0;
@@ -161,47 +169,67 @@
   height: 100vh;
   z-index: -1;
   background-color: hsl(var(--background));
-  background-image: 
-    linear-gradient(hsl(var(--border) / 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, hsl(var(--border) / 0.1) 1px, transparent 1px);
-  background-size: 40px 40px;
   overflow: hidden;
-  transition: background-color 0.5s ease;
 }
 
-/* Fun geometric blobs for neo brutalism */
-.bg-mesh::before, .bg-mesh::after {
+.bg-mesh::before, .bg-mesh::after, .bg-blob-3 {
   content: "";
   position: absolute;
-  border: 4px solid hsl(var(--border));
+  filter: blur(80px);
   z-index: -1;
-  animation: float-brutal 15s infinite alternate ease-in-out;
+  animation: liquid-flow 20s infinite alternate ease-in-out;
+  opacity: 0.6;
 }
 
 .bg-mesh::before {
-  top: 10%;
-  left: 5%;
-  width: 40vw;
-  height: 40vw;
+  top: -10%;
+  left: -10%;
+  width: 60vw;
+  height: 60vw;
   border-radius: 50%;
-  background-color: hsl(var(--accent) / 0.6);
-  box-shadow: 16px 16px 0px 0px hsl(var(--border));
+  background: radial-gradient(circle, hsl(var(--accent)) 0%, transparent 70%);
 }
 
 .bg-mesh::after {
-  bottom: 10%;
-  right: 5%;
-  width: 30vw;
-  height: 30vw;
-  border-radius: 20px;
-  background-color: hsl(var(--secondary) / 0.6);
-  box-shadow: -16px 16px 0px 0px hsl(var(--border));
-  animation-delay: -5s;
-  transform: rotate(15deg);
+  bottom: -20%;
+  right: -10%;
+  width: 70vw;
+  height: 70vw;
+  border-radius: 40%;
+  background: radial-gradient(circle, hsl(var(--secondary)) 0%, transparent 70%);
+  animation-delay: -7s;
+  animation-direction: alternate-reverse;
 }
 
-@keyframes float-brutal {
+.bg-blob-3 {
+  top: 30%;
+  left: 40%;
+  width: 50vw;
+  height: 50vw;
+  border-radius: 60%;
+  background: radial-gradient(circle, hsl(var(--primary) / 0.5) 0%, transparent 70%);
+  animation-delay: -14s;
+}
+
+@keyframes liquid-flow {
   0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  50% { transform: translate(5vw, 5vw) scale(1.05) rotate(5deg); }
-  100% { transform: translate(-5vw, 10vw) scale(0.95) rotate(-5deg); }
+  33% { transform: translate(5vw, -5vh) scale(1.1) rotate(10deg); }
+  66% { transform: translate(-5vw, 5vh) scale(0.9) rotate(-10deg); }
+  100% { transform: translate(2vw, 10vh) scale(1.05) rotate(5deg); }
+}
+
+/* Custom Scrollbar for a game feel */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+  border-left: 2px solid hsl(var(--border));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--foreground));
+  border: 2px solid hsl(var(--border));
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--accent));
 }

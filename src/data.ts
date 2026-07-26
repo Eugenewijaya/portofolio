@@ -8,7 +8,7 @@ export const PROFILE = {
   linkedin: 'https://www.linkedin.com/in/evid-wijaya',
   github: 'https://github.com/Eugenewijaya',
   portfolio: 'https://sites.google.com/view/evidwijaya/',
-  avatar: 'https://avatars.githubusercontent.com/u/180492310?v=4',
+  avatar: '/avatar.png',
   skills: ['HTML', 'Project Management', 'Programming', 'Graphic Design', 'Video Editing', 'Cloud Computing', 'Google Cloud Platform', 'Canva', 'CapCut', 'Meta Business Suite'],
 }
 
@@ -24,7 +24,7 @@ export const EXPERIENCE = [
   {
     role: 'Graphic Designer',
     company: 'Star Champs Indonesia',
-    period: 'Jul 2025 – Present · 1 yr 1 mo',
+    period: 'Jul 2025 – Present',
     location: 'Tangerang',
     type: 'Full-time',
     highlights: [
@@ -39,7 +39,7 @@ export const EXPERIENCE = [
   {
     role: 'Commissioner',
     company: 'Sagara Karya Kreanusati',
-    period: 'Jan 2024 – Jul 2026 · 2 yr 7 mo',
+    period: 'Jan 2024 – Jul 2026',
     location: 'Indonesia',
     type: 'Agency',
     highlights: [
@@ -50,8 +50,8 @@ export const EXPERIENCE = [
   },
   {
     role: 'Cloud Computing Cohort',
-    company: 'Bangkit Academy led by Google, Tokopedia, Gojek & Traveloka',
-    period: 'Sep 2024 – Jan 2025 · 5 mo',
+    company: 'Bangkit Academy',
+    period: 'Sep 2024 – Jan 2025',
     location: 'Jakarta Raya',
     type: 'Training',
     highlights: [
@@ -62,9 +62,9 @@ export const EXPERIENCE = [
     color: '#38bdf8',
   },
   {
-    role: 'Freelance Graphic Designer & Video Editor',
-    company: 'Fastwork.co',
-    period: 'Sep 2023 – Jan 2025 · 1 yr 5 mo',
+    role: 'Graphic Designer & Video Editor',
+    company: 'Freelance (Fastwork.co)',
+    period: 'Sep 2023 – Jan 2025',
     location: 'Tangerang Selatan',
     type: 'Freelance',
     highlights: [
@@ -76,7 +76,7 @@ export const EXPERIENCE = [
   {
     role: 'Information System Coordinator',
     company: 'Himpunan Psikologi Indonesia (HIMPSI)',
-    period: 'Aug 2024 – Dec 2024 · 5 mo',
+    period: 'Aug 2024 – Dec 2024',
     location: 'Kota Tangerang',
     type: 'Volunteer',
     highlights: [
@@ -85,18 +85,6 @@ export const EXPERIENCE = [
       'Managed event photography and documentation',
     ],
     color: '#10b981',
-  },
-  {
-    role: 'Student Executive Board President (BEM Ketua)',
-    company: 'STMIK Kuwera',
-    period: 'Dec 2023 – Dec 2024 · 1 yr 1 mo',
-    location: 'Jakarta',
-    type: 'Leadership',
-    highlights: [
-      'Led student body, organized seminars and workshops',
-      'Liaison between students and campus administration',
-    ],
-    color: '#ef4444',
   },
 ]
 
@@ -110,5 +98,68 @@ export const EDUCATION = [
     school: 'SMK Negeri 10 Kab. Tangerang',
     degree: 'Intermedia / Multimedia',
     period: 'Jun 2019 – Aug 2022',
+  },
+]
+
+export const PROJECTS = [
+  {
+    id: 'p1',
+    name: 'TheraCare Information System',
+    description: 'An integrated therapy center information system designed to streamline patient registration, scheduling, and medical records management.',
+    category: 'Web Development',
+    tags: ['HTML', 'System Design', 'Project Management'],
+    link: '#',
+    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800',
+    color: '#10b981',
+  },
+  {
+    id: 'p2',
+    name: '"The Journey of Hope" Seminar',
+    description: 'Lead organizer for a massive seminar with 100+ participants. Handled end-to-end event management, branding, and promotional materials.',
+    category: 'Event Organizer',
+    tags: ['Leadership', 'Event Planning', 'Public Speaking'],
+    link: '#',
+    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=800',
+    color: '#8b5cf6',
+  },
+  {
+    id: 'p3',
+    name: 'Star Champs Digital Campaigns',
+    description: 'Designed over 200+ digital and print materials for marketing campaigns. Increased social media engagement and follower growth by 200%.',
+    category: 'Graphic Design',
+    tags: ['Canva', 'Meta Business Suite', 'Social Media'],
+    link: '#',
+    image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=800',
+    color: '#f59e0b',
+  },
+  {
+    id: 'p4',
+    name: 'GCP Scalable Web Architecture',
+    description: 'Architected and deployed a highly available web application infrastructure using Google Cloud Platform load balancers and compute engines.',
+    category: 'Cloud Computing',
+    tags: ['GCP', 'Load Balancing', 'Infrastructure'],
+    link: '#',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800',
+    color: '#38bdf8',
+  },
+  {
+    id: 'p5',
+    name: 'HIMPSI E-Voting System',
+    description: 'Developed an integrated e-voting system and registration platform for organizational governance decisions and event management.',
+    category: 'Web Development',
+    tags: ['Google Sites', 'Data Management'],
+    link: '#',
+    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800',
+    color: '#ef4444',
+  },
+  {
+    id: 'p6',
+    name: 'Corporate Branding Videos',
+    description: 'Freelance video editing projects for corporate clients and SME promotional campaigns, delivering high-retention video content.',
+    category: 'Video Editing',
+    tags: ['CapCut', 'Storytelling', 'Motion Graphics'],
+    link: '#',
+    image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=800',
+    color: '#ec4899',
   },
 ]

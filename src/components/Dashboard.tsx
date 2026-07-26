@@ -1,229 +1,123 @@
 import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
-import { useRef } from 'react'
-import {
-  useGitHubUser,
-  useGitHubRepos,
-  useGitHubEvents,
-  useContributionMap,
-  getLanguageColor,
-  timeAgo,
-  type GHEvent,
-} from '../github'
-import { Star, Users, BookOpen, Activity, RefreshCw } from 'lucide-react'
-import { Github } from './Icons'
+import { Activity, Star, Users, Trophy, Target, Zap, Crown } from 'lucide-react'
 
-function StatCard({ label, value, icon: Icon, color }: { label: string; value: string | number; icon: React.ElementType; color: string }) {
+function StatCard({ label, value, icon: Icon, color, suffix = '' }: { label: string; value: string | number; icon: React.ElementType; color: string; suffix?: string }) {
   return (
-    <div className="liquid-glass p-6 flex flex-col gap-4 cursor-default w-full">
+    <div className="liquid-glass p-6 flex flex-col gap-4 cursor-default w-full bg-background group hover:-translate-y-2 hover:shadow-[8px_8px_0px_var(--foreground)] transition-all duration-300">
       <div className="flex items-center justify-between">
-        <span className="text-sm font-bold uppercase tracking-wider text-foreground">{label}</span>
-        <div className="p-3 rounded-xl border-2 border-foreground" style={{ background: color, boxShadow: '4px 4px 0px 0px var(--foreground)' }}>
+        <span className="text-[10px] font-black uppercase tracking-widest text-foreground/60">{label}</span>
+        <div className="p-3 border-2 border-foreground shadow-[3px_3px_0px_var(--foreground)]" style={{ background: color }}>
           <Icon size={18} className="text-foreground" />
         </div>
       </div>
-      <span className="text-4xl sm:text-5xl font-black text-foreground">{value}</span>
-    </div>
-  )
-}
-
-function ContributionGrid({ events }: { events: GHEvent[] }) {
-  const weeks = useContributionMap(events)
-  const max = Math.max(...weeks.flat(), 1)
-
-  const getColor = (count: number) => {
-    if (count === 0) return 'rgba(0,0,0,0.05)'
-    const intensity = count / max
-    if (intensity < 0.25) return 'hsl(var(--secondary) / 0.4)'
-    if (intensity < 0.5) return 'hsl(var(--secondary) / 0.6)'
-    if (intensity < 0.75) return 'hsl(var(--secondary) / 0.8)'
-    return 'hsl(var(--secondary))'
-  }
-
-  return (
-    <div className="liquid-glass p-6 h-full flex flex-col">
-      <div className="flex items-center gap-3 mb-6">
-        <Activity size={24} className="text-foreground" />
-        <h3 className="text-lg font-black uppercase tracking-tight text-foreground">Activity</h3>
-        <span className="ml-auto text-xs font-bold text-foreground/60 uppercase">Last 52 weeks</span>
-      </div>
-      <div className="flex gap-1.5 overflow-x-auto pb-4 flex-1 items-end">
-        {weeks.map((week, wi) => (
-          <div key={wi} className="flex flex-col gap-1.5">
-            {week.map((count, di) => (
-              <div
-                key={di}
-                title={`${count} activities`}
-                className="w-3 h-3 sm:w-4 sm:h-4 rounded-sm border border-foreground/20 cursor-default hover:border-foreground transition-colors"
-                style={{ background: count > 0 ? getColor(count) : 'transparent' }}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-      <div className="flex items-center gap-2 mt-auto justify-end">
-        <span className="text-xs font-bold text-foreground/60 uppercase">Less</span>
-        {[0, 0.25, 0.5, 0.75, 1].map((i, idx) => (
-          <div key={idx} className="w-3 h-3 rounded-sm border border-foreground/20" style={{ background: i > 0 ? getColor(i * max) : 'transparent' }} />
-        ))}
-        <span className="text-xs font-bold text-foreground/60 uppercase">More</span>
+      <div className="flex items-baseline gap-1">
+        <span className="text-4xl sm:text-5xl font-black text-foreground uppercase">{value}</span>
+        {suffix && <span className="text-xl font-bold text-foreground/50 uppercase">{suffix}</span>}
       </div>
     </div>
   )
 }
 
-function LangBar({ repos }: { repos: Array<{ language: string | null }> }) {
-  const counts: Record<string, number> = {}
-  repos.forEach(r => {
-    if (r.language) counts[r.language] = (counts[r.language] || 0) + 1
-  })
-  const total = Object.values(counts).reduce((a, b) => a + b, 0)
-  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 8)
-
+function SkillProgress({ skill, level, color }: { skill: string, level: number, color: string }) {
   return (
-    <div className="liquid-glass p-6 h-full flex flex-col">
-      <div className="flex items-center gap-3 mb-6">
-        <BookOpen size={24} className="text-foreground" />
-        <h3 className="text-lg font-black uppercase tracking-tight text-foreground">Languages</h3>
+    <div className="flex flex-col gap-2">
+      <div className="flex justify-between items-center text-xs font-black uppercase">
+        <span className="text-foreground">{skill}</span>
+        <span className="text-foreground/50">Lvl {level}</span>
       </div>
-      
-      <div className="flex border-2 border-foreground h-4 mb-6 rounded-sm overflow-hidden shadow-[3px_3px_0px_var(--foreground)]">
-        {sorted.map(([lang, count]) => (
-          <div
-            key={lang}
-            title={`${lang}: ${Math.round((count / total) * 100)}%`}
-            className="h-full border-r-2 border-foreground last:border-r-0 transition-all duration-500"
-            style={{ width: `${(count / total) * 100}%`, background: getLanguageColor(lang) }}
-          />
-        ))}
-      </div>
-      
-      <div className="flex flex-wrap gap-x-4 gap-y-3 mt-auto">
-        {sorted.map(([lang, count]) => (
-          <div key={lang} className="flex items-center gap-2 text-sm font-bold text-foreground uppercase">
-            <div className="w-3 h-3 border-2 border-foreground rounded-sm" style={{ background: getLanguageColor(lang) }} />
-            {lang} <span className="text-foreground/50">{Math.round((count / total) * 100)}%</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function RecentEvents({ events }: { events: GHEvent[] }) {
-  const display = events.slice(0, 5)
-  return (
-    <div className="liquid-glass p-6 h-full flex flex-col">
-      <div className="flex items-center gap-3 mb-6">
-        <RefreshCw size={24} className="text-foreground" />
-        <h3 className="text-lg font-black uppercase tracking-tight text-foreground">Recent Actions</h3>
-      </div>
-      <div className="flex flex-col gap-4 flex-1">
-        {display.map(ev => {
-          let action = ev.type.replace('Event', '')
-          if (ev.type === 'PushEvent') action = `Pushed to ${ev.repo.name}`
-          if (ev.type === 'WatchEvent') action = `Starred ${ev.repo.name}`
-          if (ev.type === 'CreateEvent') action = `Created ${ev.repo.name}`
-          
-          return (
-            <div key={ev.id} className="flex items-start gap-3 p-3 border-2 border-foreground rounded-xl shadow-[3px_3px_0px_var(--foreground)] bg-background">
-              <Github size={16} className="text-foreground mt-0.5 shrink-0" />
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-bold text-foreground truncate">{action}</p>
-                <p className="text-xs text-foreground/60 font-medium uppercase mt-1">{timeAgo(ev.created_at)}</p>
-              </div>
-            </div>
-          )
-        })}
+      <div className="h-4 border-2 border-foreground bg-background p-0.5 shadow-[2px_2px_0px_var(--foreground)]">
+        <motion.div 
+          initial={{ width: 0 }}
+          animate={{ width: `${level}%` }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="h-full bg-foreground"
+          style={{ background: color }}
+        />
       </div>
     </div>
   )
 }
 
 export default function Dashboard() {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
-  const { data: user } = useGitHubUser()
-  const { repos } = useGitHubRepos()
-  const { events } = useGitHubEvents()
-
-  const stars = repos.reduce((acc, r) => acc + r.stargazers_count, 0)
-
   return (
-    <section id="dashboard" className="relative py-24 px-6" ref={ref}>
-      <div className="max-w-6xl mx-auto">
+    <section className="relative py-12 h-full flex flex-col justify-center">
+      <div className="max-w-5xl mx-auto w-full">
         <motion.div
           initial={{ y: 30, opacity: 0 }}
-          animate={inView ? { y: 0, opacity: 1 } : {}}
+          animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="mb-12"
+          className="mb-12 text-center flex flex-col items-center"
         >
           <div className="flex items-center gap-3 mb-3">
-            <Activity size={16} className="text-accent" />
-            <span className="text-xs font-bold uppercase tracking-widest text-accent border-2 border-accent px-2 py-0.5 rounded-full">Live Metrics</span>
+            <Trophy size={16} className="text-accent" />
+            <span className="text-xs font-bold uppercase tracking-widest text-accent border-2 border-accent px-2 py-0.5 rounded-full">Player Profile</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black uppercase text-foreground mb-3 tracking-tighter">Performance Dashboard</h2>
-          <p className="text-foreground/70 font-medium max-w-xl">Real-time developer analytics pulled directly from the GitHub API.</p>
+          <h2 className="text-3xl sm:text-5xl font-black uppercase text-foreground tracking-tighter">Stats & Level</h2>
         </motion.div>
 
-        {/* Bento Grid Layout for Dashboard */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-min">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           
-          {/* Top row: 3 Stat Cards (4 cols each on desktop) */}
+          {/* Main Level Card - 4 cols */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
-            animate={inView ? { y: 0, opacity: 1 } : {}}
+            animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="md:col-span-4"
+            className="md:col-span-4 liquid-glass p-8 flex flex-col items-center text-center bg-primary text-primary-foreground"
           >
-            <StatCard label="Public Repos" value={user?.public_repos || 0} icon={BookOpen} color="#10b981" />
+            <div className="w-24 h-24 border-4 border-primary-foreground bg-accent flex items-center justify-center mb-6 shadow-[4px_4px_0px_var(--primary-foreground)] rotate-3">
+              <Crown size={40} className="text-accent-foreground" />
+            </div>
+            <h3 className="text-sm font-bold uppercase tracking-widest opacity-70 mb-1">Current Level</h3>
+            <div className="text-6xl font-black uppercase tracking-tighter mb-4">99</div>
+            
+            <div className="w-full text-left mt-auto">
+              <div className="flex justify-between text-[10px] font-black uppercase mb-1">
+                <span>XP Progress</span>
+                <span>85%</span>
+              </div>
+              <div className="h-3 border-2 border-primary-foreground bg-primary p-0.5">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: '85%' }}
+                  transition={{ duration: 1.5, ease: 'easeOut' }}
+                  className="h-full bg-secondary"
+                />
+              </div>
+            </div>
           </motion.div>
-          
+
+          {/* Core Stats - 8 cols */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
-            animate={inView ? { y: 0, opacity: 1 } : {}}
+            animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="md:col-span-4"
+            className="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6"
           >
-            <StatCard label="Total Stars" value={stars} icon={Star} color="#f59e0b" />
-          </motion.div>
-          
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={inView ? { y: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="md:col-span-4"
-          >
-            <StatCard label="Followers" value={user?.followers || 0} icon={Users} color="#6366f1" />
+            <StatCard label="Quests Completed" value="45" icon={Target} color="#10b981" />
+            <StatCard label="Client Rating" value="4.9" suffix="/5" icon={Star} color="#f59e0b" />
+            <StatCard label="Community Impact" value="10k" suffix="+" icon={Users} color="#6366f1" />
+            <StatCard label="Creative Power" value="MAX" icon={Zap} color="#ec4899" />
           </motion.div>
 
-          {/* Middle row: Contributions (8 cols) + Recent Actions (4 cols) */}
+          {/* Skill Trees - 12 cols */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
-            animate={inView ? { y: 0, opacity: 1 } : {}}
+            animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="md:col-span-8 md:row-span-2"
+            className="md:col-span-12 liquid-glass p-8 bg-background"
           >
-            <ContributionGrid events={events} />
-          </motion.div>
-
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={inView ? { y: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="md:col-span-4 md:row-span-4"
-          >
-            <RecentEvents events={events} />
-          </motion.div>
-
-          {/* Bottom row: Languages (8 cols) */}
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={inView ? { y: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="md:col-span-8 md:row-span-2"
-          >
-            <LangBar repos={repos} />
+            <div className="flex items-center gap-3 mb-8">
+              <Activity size={24} className="text-secondary" />
+              <h3 className="text-lg font-black uppercase tracking-tight text-foreground">Skill Tree Mastery</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+              <SkillProgress skill="Graphic Design (Canva/PS)" level={95} color="#ec4899" />
+              <SkillProgress skill="Cloud Computing (GCP)" level={75} color="#38bdf8" />
+              <SkillProgress skill="Video Editing (CapCut)" level={85} color="#f59e0b" />
+              <SkillProgress skill="Web Architecture" level={70} color="#10b981" />
+              <SkillProgress skill="Event Management" level={90} color="#6366f1" />
+              <SkillProgress skill="UI/UX Design" level={80} color="#a855f7" />
+            </div>
           </motion.div>
 
         </div>
