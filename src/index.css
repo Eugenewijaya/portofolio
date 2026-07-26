@@ -35,68 +35,70 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 240 10% 3.9%;
+    --background: 0 0% 95%; /* Off-white for light mode */
+    --foreground: 240 10% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 240 10% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
+    --popover-foreground: 240 10% 10%;
+    --primary: 240 10% 10%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    --secondary: 160 84% 39%; /* Vibrant Teal */
+    --secondary-foreground: 240 10% 10%;
+    --muted: 240 5% 90%;
+    --muted-foreground: 240 5% 40%;
+    --accent: 320 80% 55%; /* Vibrant Pink */
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    --border: 240 10% 10%; /* Solid black for Brutalism */
+    --input: 240 10% 10%;
+    --ring: 240 10% 10%;
+    --chart-1: 340 80% 60%;
+    --chart-2: 45 90% 50%;
+    --chart-3: 160 84% 39%;
+    --chart-4: 210 90% 55%;
+    --chart-5: 280 80% 60%;
+    --radius: 0.75rem; /* Rounded but still stark */
     
     /* Liquid Glass Light */
-    --glass-bg: rgba(255, 255, 255, 0.4);
-    --glass-border: rgba(255, 255, 255, 0.8);
-    --glass-shadow: rgba(0, 0, 0, 0.05);
+    --glass-bg: rgba(255, 255, 255, 0.5);
+    --glass-border: var(--foreground);
+    --glass-shadow: var(--foreground);
+    --glass-blur: 16px;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
+    --background: 240 10% 10%; /* Very dark gray */
+    --foreground: 0 0% 95%;
+    --card: 240 10% 10%;
+    --card-foreground: 0 0% 95%;
+    --popover: 240 10% 10%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 0 0% 95%;
+    --primary-foreground: 240 10% 10%;
+    --secondary: 160 84% 39%;
+    --secondary-foreground: 240 10% 10%;
+    --muted: 240 5% 20%;
+    --muted-foreground: 240 5% 70%;
+    --accent: 320 80% 55%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --border: 0 0% 95%; /* Solid white for Brutalism in dark mode */
+    --input: 0 0% 95%;
+    --ring: 0 0% 95%;
+    --chart-1: 340 80% 60%;
+    --chart-2: 45 90% 50%;
+    --chart-3: 160 84% 39%;
+    --chart-4: 210 90% 55%;
+    --chart-5: 280 80% 60%;
 
     /* Liquid Glass Dark */
-    --glass-bg: rgba(0, 0, 0, 0.4);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-shadow: rgba(0, 0, 0, 0.5);
+    --glass-bg: rgba(26, 26, 26, 0.4);
+    --glass-border: var(--foreground);
+    --glass-shadow: var(--foreground);
+    --glass-blur: 16px;
   }
 }
 
@@ -112,22 +114,45 @@
 @layer utilities {
   .liquid-glass {
     background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 8px 32px 0 var(--glass-shadow);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 3px solid hsl(var(--glass-border));
+    box-shadow: 6px 6px 0px 0px hsl(var(--glass-shadow));
+    border-radius: var(--radius);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+  }
+  
+  .liquid-glass:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 10px 10px 0px 0px hsl(var(--glass-shadow));
+  }
+  
+  /* Solid Brutal Button */
+  .brutal-btn {
+    @apply font-bold px-6 py-3 rounded-lg border-3 border-border transition-all duration-200 cursor-pointer;
+    box-shadow: 4px 4px 0px 0px hsl(var(--glass-shadow));
+  }
+  
+  .brutal-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px 0px hsl(var(--glass-shadow));
+  }
+  
+  .brutal-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px 0px hsl(var(--glass-shadow));
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent via-secondary to-primary;
   }
   
   .dark .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent via-secondary to-primary;
   }
 }
 
-/* Background animated gradient mesh */
+/* Brutalist Grid Background */
 .bg-mesh {
   position: fixed;
   top: 0;
@@ -135,45 +160,48 @@
   width: 100vw;
   height: 100vh;
   z-index: -1;
-  background-color: var(--background);
+  background-color: hsl(var(--background));
+  background-image: 
+    linear-gradient(hsl(var(--border) / 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--border) / 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
   overflow: hidden;
   transition: background-color 0.5s ease;
 }
 
+/* Fun geometric blobs for neo brutalism */
 .bg-mesh::before, .bg-mesh::after {
   content: "";
   position: absolute;
-  width: 60vw;
-  height: 60vw;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.5;
-  animation: float 20s infinite alternate ease-in-out;
+  border: 4px solid hsl(var(--border));
+  z-index: -1;
+  animation: float-brutal 15s infinite alternate ease-in-out;
 }
 
 .bg-mesh::before {
-  top: -10vw;
-  left: -10vw;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+  top: 10%;
+  left: 5%;
+  width: 40vw;
+  height: 40vw;
+  border-radius: 50%;
+  background-color: hsl(var(--accent) / 0.6);
+  box-shadow: 16px 16px 0px 0px hsl(var(--border));
 }
 
 .bg-mesh::after {
-  bottom: -10vw;
-  right: -10vw;
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%);
-  animation-delay: -10s;
+  bottom: 10%;
+  right: 5%;
+  width: 30vw;
+  height: 30vw;
+  border-radius: 20px;
+  background-color: hsl(var(--secondary) / 0.6);
+  box-shadow: -16px 16px 0px 0px hsl(var(--border));
+  animation-delay: -5s;
+  transform: rotate(15deg);
 }
 
-.dark .bg-mesh::before {
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
-}
-
-.dark .bg-mesh::after {
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
-}
-
-@keyframes float {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(10vw, 5vw) scale(1.1); }
-  100% { transform: translate(-5vw, 15vw) scale(0.9); }
+@keyframes float-brutal {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(5vw, 5vw) scale(1.05) rotate(5deg); }
+  100% { transform: translate(-5vw, 10vw) scale(0.95) rotate(-5deg); }
 }

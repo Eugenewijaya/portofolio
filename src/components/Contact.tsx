@@ -11,10 +11,6 @@ export default function Contact() {
 
   return (
     <section id="contact" className="relative py-24 px-6" ref={ref}>
-      {/* Decorative bottom orbs */}
-      <div className="orb w-[400px] h-[400px] bg-indigo-600/15 -bottom-20 left-1/4" style={{ animationDelay: '1s' }} />
-      <div className="orb w-[300px] h-[300px] bg-violet-600/10 -bottom-10 right-0" style={{ animationDelay: '3s' }} />
-
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ y: 30, opacity: 0 }}
@@ -23,22 +19,22 @@ export default function Contact() {
           className="mb-12"
         >
           <div className="flex items-center gap-3 mb-3">
-            <Send size={16} className="text-indigo-400" />
-            <span className="text-xs font-semibold uppercase tracking-widest text-indigo-400">Let's Talk</span>
+            <Send size={16} className="text-primary" />
+            <span className="text-xs font-bold uppercase tracking-widest text-primary border-2 border-primary px-2 py-0.5 rounded-full">Let's Talk</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-gradient mb-3">Get In Touch</h2>
-          <p className="text-zinc-500 max-w-xl">
+          <h2 className="text-3xl sm:text-5xl font-black uppercase text-foreground mb-3 tracking-tighter">Get In Touch</h2>
+          <p className="text-foreground/70 font-medium max-w-xl">
             I'm always open to new projects, collaborations, or just a friendly conversation. Drop me a message!
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-          {/* Contact cards */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-auto">
+          {/* Contact cards - 5 columns */}
           <motion.div
             initial={{ x: -30, opacity: 0 }}
             animate={inView ? { x: 0, opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:col-span-2 space-y-4"
+            className="md:col-span-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-4"
           >
             {[
               {
@@ -47,6 +43,8 @@ export default function Contact() {
                 href: `mailto:${PROFILE.email}`,
                 icon: Mail,
                 color: '#6366f1',
+                bg: 'bg-primary',
+                fg: 'text-primary-foreground'
               },
               {
                 label: 'LinkedIn',
@@ -54,6 +52,8 @@ export default function Contact() {
                 href: PROFILE.linkedin,
                 icon: Linkedin,
                 color: '#0A66C2',
+                bg: 'bg-secondary',
+                fg: 'text-foreground'
               },
               {
                 label: 'GitHub',
@@ -61,6 +61,8 @@ export default function Contact() {
                 href: PROFILE.github,
                 icon: Github,
                 color: '#f4f4f5',
+                bg: 'bg-accent',
+                fg: 'text-accent-foreground'
               },
               {
                 label: 'Portfolio',
@@ -68,6 +70,8 @@ export default function Contact() {
                 href: PROFILE.portfolio,
                 icon: ExternalLink,
                 color: '#10b981',
+                bg: 'bg-background',
+                fg: 'text-foreground'
               },
             ].map((c, i) => (
               <motion.a
@@ -78,45 +82,44 @@ export default function Contact() {
                 initial={{ y: 15, opacity: 0 }}
                 animate={inView ? { y: 0, opacity: 1 } : {}}
                 transition={{ duration: 0.4, delay: 0.15 + i * 0.08 }}
-                className="flex items-center gap-4 glass-card border-gradient p-5 cursor-pointer group no-underline"
+                className={`flex items-center gap-4 ${c.bg} ${c.fg} border-2 border-foreground shadow-[3px_3px_0px_var(--foreground)] p-4 cursor-pointer group hover:-translate-y-1 hover:shadow-[4px_4px_0px_var(--foreground)] transition-all`}
                 aria-label={c.label}
               >
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-200 group-hover:scale-110"
-                  style={{ background: `${c.color}15`, border: `1px solid ${c.color}25` }}
+                  className="w-10 h-10 flex items-center justify-center flex-shrink-0 border-2 border-foreground shadow-[2px_2px_0px_var(--foreground)] bg-background"
                 >
-                  <c.icon size={16} style={{ color: c.color }} />
+                  <c.icon size={16} className="text-foreground" />
                 </div>
-                <div className="min-w-0">
-                  <p className="text-xs text-zinc-600 mb-0.5">{c.label}</p>
-                  <p className="text-sm text-zinc-300 group-hover:text-white transition-colors truncate">{c.value}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[10px] font-black uppercase opacity-60 mb-0.5">{c.label}</p>
+                  <p className="text-sm font-bold truncate">{c.value}</p>
                 </div>
-                <ExternalLink size={12} className="text-zinc-700 group-hover:text-zinc-400 transition-colors ml-auto flex-shrink-0" />
+                <ExternalLink size={14} className="opacity-50 group-hover:opacity-100 transition-opacity ml-auto flex-shrink-0" />
               </motion.a>
             ))}
           </motion.div>
 
-          {/* CTA card */}
+          {/* CTA card - 7 columns */}
           <motion.div
             initial={{ x: 30, opacity: 0 }}
             animate={inView ? { x: 0, opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-3 glass-card border-gradient p-8 flex flex-col justify-between"
+            className="md:col-span-7 liquid-glass p-8 flex flex-col justify-between bg-background"
           >
             <div>
-              <div className="w-14 h-14 rounded-2xl bg-indigo-500/15 border border-indigo-500/20 flex items-center justify-center mb-6">
-                <Send size={22} className="text-indigo-400" />
+              <div className="w-16 h-16 border-4 border-foreground shadow-[4px_4px_0px_var(--foreground)] bg-primary flex items-center justify-center mb-8">
+                <Send size={28} className="text-primary-foreground" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-3">Have a project in mind?</h3>
-              <p className="text-zinc-400 text-sm leading-relaxed mb-8">
+              <h3 className="text-3xl font-black uppercase text-foreground mb-4">Have a project in mind?</h3>
+              <p className="text-foreground/70 text-base font-bold leading-relaxed mb-8 max-w-md border-l-4 border-accent pl-4">
                 Whether you need graphic design, a web system, an event organized, or cloud infrastructure — I'm here to help you make it happen with quality and creativity.
               </p>
             </div>
             <a
               href={`mailto:${PROFILE.email}`}
-              className="inline-flex items-center justify-center gap-2 w-full py-4 rounded-2xl bg-indigo-500 hover:bg-indigo-400 text-white text-sm font-semibold transition-all duration-300 hover:shadow-[0_0_40px_rgba(99,102,241,0.4)] hover:-translate-y-0.5 cursor-pointer"
+              className="inline-flex items-center justify-center gap-3 w-full py-5 border-2 border-foreground shadow-[4px_4px_0px_var(--foreground)] bg-accent text-accent-foreground text-lg font-black uppercase transition-all hover:bg-accent/90 hover:-translate-y-1 hover:shadow-[6px_6px_0px_var(--foreground)] cursor-pointer"
             >
-              <Mail size={16} />
+              <Mail size={20} />
               Send me an Email
             </a>
           </motion.div>
@@ -127,15 +130,15 @@ export default function Contact() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-700"
+          className="mt-20 pt-8 border-t-2 border-foreground flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-bold uppercase text-foreground/70"
         >
           <span>© {new Date().getFullYear()} Evid Wijaya. All rights reserved.</span>
           <div className="flex items-center gap-4">
-            <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" className="hover:text-zinc-400 transition-colors cursor-pointer">GitHub</a>
-            <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-zinc-400 transition-colors cursor-pointer">LinkedIn</a>
-            <a href={PROFILE.portfolio} target="_blank" rel="noopener noreferrer" className="hover:text-zinc-400 transition-colors cursor-pointer">Portfolio</a>
+            <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors cursor-pointer">GitHub</a>
+            <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors cursor-pointer">LinkedIn</a>
+            <a href={PROFILE.portfolio} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors cursor-pointer">Portfolio</a>
           </div>
-          <span>Built with React + Framer Motion</span>
+          <span>Built with React + Tailwind v4</span>
         </motion.div>
       </div>
     </section>
