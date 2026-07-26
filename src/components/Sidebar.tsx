@@ -30,7 +30,6 @@ export default function Sidebar() {
     { name: t('nav.connect'), path: '/contact', icon: Mail, color: '#6366f1' },
   ]
 
-  const realisticLevel = 17 
 
   return (
     <>
