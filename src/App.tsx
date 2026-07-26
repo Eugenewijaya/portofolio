@@ -41,8 +41,8 @@ export default function App() {
 
         <Sidebar onToggleGameMode={() => setIsGameMode(true)} />
         
-        {/* Main Content Area - padded left by sidebar width (16rem / 64) */}
-        <main className="flex-1 ml-64 p-6 min-h-screen">
+        {/* Main Content Area - padded left by sidebar width on desktop, top padded on mobile */}
+        <main className="flex-1 ml-0 md:ml-64 p-4 sm:p-6 pt-20 md:pt-6 min-h-screen max-w-full overflow-x-hidden">
           <Routes>
             <Route path="/" element={<PageTransition><Hero /></PageTransition>} />
             <Route path="/stats" element={<PageTransition><Dashboard /></PageTransition>} />

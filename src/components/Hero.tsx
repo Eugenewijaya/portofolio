@@ -5,15 +5,15 @@ import { PROFILE } from '../data'
 
 export default function Hero() {
   return (
-    <section className="relative h-full flex flex-col justify-center py-12">
-      <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[200px]">
+    <section className="relative min-h-[calc(100vh-5rem)] flex flex-col justify-center py-4 md:py-12">
+      <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-6 md:auto-rows-[200px] auto-rows-auto">
         
         {/* Main Headline (Spans 2x2 on desktop) */}
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="liquid-glass md:col-span-2 md:row-span-2 flex flex-col justify-center p-8 relative overflow-hidden"
+          className="liquid-glass md:col-span-2 md:row-span-2 flex flex-col justify-center p-6 sm:p-8 relative overflow-hidden min-h-[220px]"
         >
           <div className="absolute top-4 left-4">
             <span className="px-3 py-1 text-[10px] font-black uppercase tracking-widest bg-foreground text-background border-2 border-foreground shadow-[2px_2px_0px_var(--foreground)]">
@@ -32,7 +32,7 @@ export default function Hero() {
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="liquid-glass md:col-span-1 md:row-span-1 p-4 flex items-center justify-center relative overflow-hidden group"
+          className="liquid-glass md:col-span-1 md:row-span-1 p-4 flex items-center justify-center relative overflow-hidden group min-h-[220px] max-h-[300px] md:max-h-none"
         >
           <img
             src={PROFILE.avatar}

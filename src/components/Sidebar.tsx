@@ -1,10 +1,12 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useLocation } from 'react-router-dom'
-import { Home, User, Briefcase, Layout, Mail, Gamepad2, Play } from 'lucide-react'
+import { Home, User, Briefcase, Layout, Mail, Gamepad2, Play, Menu, X } from 'lucide-react'
 import { PROFILE } from '../data'
 
 export default function Sidebar({ onToggleGameMode }: { onToggleGameMode: () => void }) {
   const location = useLocation()
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   const links = [
     { name: 'Lobby', path: '/', icon: Home, color: '#38bdf8' },
@@ -15,17 +17,65 @@ export default function Sidebar({ onToggleGameMode }: { onToggleGameMode: () => 
     { name: 'Connect', path: '/contact', icon: Mail, color: '#6366f1' },
   ]
 
-  // Assuming 16 total quests/achievements for level calculation 
-  // (we calculate dynamically in Dashboard, but let's hardcode the realistic Base+16=17 here)
   const realisticLevel = 17 
 
   return (
-    <motion.nav 
-      initial={{ x: -100, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="fixed left-0 top-0 h-screen w-64 liquid-glass z-50 rounded-none border-t-0 border-b-0 border-l-0 flex flex-col justify-between py-8 overflow-y-auto"
-    >
+    <>
+      {/* Mobile Top Navigation Header */}
+      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-background/90 backdrop-blur-md border-b-4 border-foreground z-40 px-4 flex items-center justify-between">
+        <Link to="/" className="flex items-center gap-3">
+          <img 
+            src={PROFILE.avatar} 
+            alt={PROFILE.name} 
+            className="w-10 h-10 rounded-full border-2 border-foreground object-cover shadow-[2px_2px_0px_var(--foreground)]"
+          />
+          <div>
+            <h1 className="text-sm font-black uppercase text-foreground leading-tight">{PROFILE.name}</h1>
+            <span className="text-[9px] font-black uppercase text-accent">Lv. {realisticLevel}</span>
+          </div>
+        </Link>
+
+        <div className="flex items-center gap-2">
+          <button
+            onClick={onToggleGameMode}
+            className="px-3 py-1.5 border-2 border-foreground bg-accent text-accent-foreground shadow-[2px_2px_0px_var(--foreground)] font-black uppercase text-xs flex items-center gap-1.5 active:translate-y-0.5 active:shadow-none"
+          >
+            <Play size={14} /> Game
+          </button>
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="p-2 border-2 border-foreground bg-background text-foreground shadow-[2px_2px_0px_var(--foreground)] font-black uppercase active:translate-y-0.5 active:shadow-none"
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Drawer Overlay Backdrop */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setMobileOpen(false)}
+            className="md:hidden fixed inset-0 bg-foreground/50 z-40 backdrop-blur-xs"
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Main Sidebar (Desktop fixed left, Mobile drawer) */}
+      <motion.nav 
+        initial={false}
+        animate={{ 
+          x: typeof window !== 'undefined' && window.innerWidth < 768 ? (mobileOpen ? 0 : -320) : 0 
+        }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+        className={`fixed left-0 top-0 h-screen w-64 liquid-glass z-50 rounded-none border-t-0 border-b-0 border-l-0 flex flex-col justify-between py-8 overflow-y-auto ${
+          mobileOpen ? 'shadow-[8px_0px_0px_var(--foreground)]' : ''
+        }`}
+      >
       <div className="px-6 flex flex-col gap-10">
         {/* Profile Avatar / Logo */}
         <Link to="/" className="flex flex-col items-center gap-4 group cursor-pointer">
@@ -53,6 +103,7 @@ export default function Sidebar({ onToggleGameMode }: { onToggleGameMode: () => 
               <Link
                 key={link.name}
                 to={link.path}
+                onClick={() => setMobileOpen(false)}
                 className={`game-menu-item ${isActive ? 'active' : ''}`}
                 style={{ 
                   '--accent': link.color, 
@@ -92,5 +143,6 @@ export default function Sidebar({ onToggleGameMode }: { onToggleGameMode: () => 
         </div>
       </div>
     </motion.nav>
+    </>
   )
 }

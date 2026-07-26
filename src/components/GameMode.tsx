@@ -111,24 +111,25 @@ export default function GameMode({ onClose }: { onClose: () => void }) {
         </button>
       </div>
 
-      <div className="absolute top-6 left-6 z-10 liquid-glass p-4 bg-background">
-        <h2 className="text-xl font-black uppercase text-foreground mb-1">Evid's World</h2>
-        <p className="text-xs font-bold text-foreground/70 uppercase">Use W A S D or Arrows to move.</p>
-        <p className="text-xs font-bold text-foreground/70 uppercase">Press SPACE near a building to enter.</p>
+      <div className="absolute top-4 left-4 right-16 md:right-auto z-10 liquid-glass p-3 sm:p-4 bg-background max-w-xs">
+        <h2 className="text-base sm:text-xl font-black uppercase text-foreground mb-0.5">Evid's World</h2>
+        <p className="text-[10px] sm:text-xs font-bold text-foreground/70 uppercase">Use W A S D or Arrows / D-Pad to move.</p>
+        <p className="text-[10px] sm:text-xs font-bold text-foreground/70 uppercase">Press SPACE or 'A' near a building to enter.</p>
       </div>
 
-      {/* Game Map Container */}
-      <div 
-        ref={containerRef}
-        className="relative bg-primary/20 border-4 border-foreground shadow-[8px_8px_0px_var(--foreground)]"
-        style={{ 
-          width: MAP_WIDTH * TILE_SIZE, 
-          height: MAP_HEIGHT * TILE_SIZE,
-          backgroundImage: 'radial-gradient(var(--foreground) 2px, transparent 0)',
-          backgroundSize: `${TILE_SIZE}px ${TILE_SIZE}px`,
-          backgroundPosition: '-2px -2px'
-        }}
-      >
+      {/* Game Map Wrapper with scaling for mobile */}
+      <div className="w-full flex items-center justify-center p-2 overflow-hidden my-auto">
+        <div 
+          ref={containerRef}
+          className="relative bg-primary/20 border-4 border-foreground shadow-[8px_8px_0px_var(--foreground)] scale-[0.42] xs:scale-[0.55] sm:scale-[0.75] md:scale-100 transform origin-center transition-transform"
+          style={{ 
+            width: MAP_WIDTH * TILE_SIZE, 
+            height: MAP_HEIGHT * TILE_SIZE,
+            backgroundImage: 'radial-gradient(var(--foreground) 2px, transparent 0)',
+            backgroundSize: `${TILE_SIZE}px ${TILE_SIZE}px`,
+            backgroundPosition: '-2px -2px'
+          }}
+        >
         {/* Buildings */}
         {BUILDINGS.map(b => (
           <div
@@ -190,24 +191,31 @@ export default function GameMode({ onClose }: { onClose: () => void }) {
       </div>
 
       {/* Mobile D-Pad (Visible only on small screens) */}
-      <div className="md:hidden absolute bottom-12 left-1/2 -translate-x-1/2 grid grid-cols-3 gap-2">
+      <div className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 grid grid-cols-3 gap-1.5 z-20">
         <div />
-        <button onTouchStart={() => movePlayer(0, -1)} className="p-4 bg-background border-4 border-foreground shadow-[4px_4px_0px_var(--foreground)] active:translate-y-1 active:shadow-none"><ArrowUp size={24} /></button>
+        <button onClick={() => movePlayer(0, -1)} onTouchStart={(e) => { e.preventDefault(); movePlayer(0, -1) }} className="p-3 bg-background border-4 border-foreground shadow-[3px_3px_0px_var(--foreground)] active:translate-y-1 active:shadow-none"><ArrowUp size={20} /></button>
         <div />
-        <button onTouchStart={() => movePlayer(-1, 0)} className="p-4 bg-background border-4 border-foreground shadow-[4px_4px_0px_var(--foreground)] active:translate-y-1 active:shadow-none"><ArrowLeft size={24} /></button>
-        <button onTouchStart={() => {
+        <button onClick={() => movePlayer(-1, 0)} onTouchStart={(e) => { e.preventDefault(); movePlayer(-1, 0) }} className="p-3 bg-background border-4 border-foreground shadow-[3px_3px_0px_var(--foreground)] active:translate-y-1 active:shadow-none"><ArrowLeft size={20} /></button>
+        <button onClick={() => {
             if (activeBuilding) {
               navigate(activeBuilding.path)
               onClose()
             }
           }} 
-          className="p-4 bg-accent text-accent-foreground border-4 border-foreground shadow-[4px_4px_0px_var(--foreground)] active:translate-y-1 active:shadow-none font-black text-xs uppercase"
+          onTouchStart={(e) => {
+            e.preventDefault()
+            if (activeBuilding) {
+              navigate(activeBuilding.path)
+              onClose()
+            }
+          }}
+          className="p-3 bg-accent text-accent-foreground border-4 border-foreground shadow-[3px_3px_0px_var(--foreground)] active:translate-y-1 active:shadow-none font-black text-xs uppercase"
         >
           A
         </button>
-        <button onTouchStart={() => movePlayer(1, 0)} className="p-4 bg-background border-4 border-foreground shadow-[4px_4px_0px_var(--foreground)] active:translate-y-1 active:shadow-none"><ArrowRight size={24} /></button>
+        <button onClick={() => movePlayer(1, 0)} onTouchStart={(e) => { e.preventDefault(); movePlayer(1, 0) }} className="p-3 bg-background border-4 border-foreground shadow-[3px_3px_0px_var(--foreground)] active:translate-y-1 active:shadow-none"><ArrowRight size={20} /></button>
         <div />
-        <button onTouchStart={() => movePlayer(0, 1)} className="p-4 bg-background border-4 border-foreground shadow-[4px_4px_0px_var(--foreground)] active:translate-y-1 active:shadow-none"><ArrowDown size={24} /></button>
+        <button onClick={() => movePlayer(0, 1)} onTouchStart={(e) => { e.preventDefault(); movePlayer(0, 1) }} className="p-3 bg-background border-4 border-foreground shadow-[3px_3px_0px_var(--foreground)] active:translate-y-1 active:shadow-none"><ArrowDown size={20} /></button>
         <div />
       </div>
 
