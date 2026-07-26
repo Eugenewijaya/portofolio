@@ -15,7 +15,7 @@ export default function Projects() {
         >
           <div className="flex items-center gap-3 mb-3">
             <Layers size={16} className="text-secondary" />
-            <span className="text-xs font-bold uppercase tracking-widest text-secondary border-2 border-secondary px-2 py-0.5 rounded-full">Inventory</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-secondary border border-secondary/30 px-3 py-1 rounded-full liquid-glass bg-secondary/10">Inventory</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black uppercase text-foreground mb-3 tracking-tighter">My Quests & Loot</h2>
           <p className="text-foreground/70 font-bold max-w-xl">Hover over the cards to interact with the 3D gallery.</p>
@@ -37,13 +37,13 @@ export default function Projects() {
                     className="w-full flex items-start justify-between gap-2 mb-4"
                   >
                     <div className="flex items-center gap-2 min-w-0">
-                      <div className="w-4 h-4 border-2 border-foreground bg-background shadow-[2px_2px_0px_var(--foreground)]" style={{ background: repo.color }} />
+                      <div className="w-4 h-4 rounded-full border border-foreground/20" style={{ background: repo.color, boxShadow: `0 0 10px ${repo.color}` }} />
                       <span className="text-lg font-black uppercase text-foreground truncate group-hover/card:text-accent transition-colors">
                         {repo.name}
                       </span>
                     </div>
                     {repo.link !== '#' && (
-                      <a href={repo.link} target="_blank" rel="noopener noreferrer" className="p-2 border-2 border-foreground rounded-lg shadow-[2px_2px_0px_var(--foreground)] hover:translate-y-0.5 hover:shadow-[0px_0px_0px_var(--foreground)] transition-all bg-background">
+                      <a href={repo.link} target="_blank" rel="noopener noreferrer" className="p-2 liquid-glass rounded-lg hover:-translate-y-1 transition-all">
                         <ExternalLink size={14} className="text-foreground" />
                       </a>
                     )}
@@ -53,7 +53,7 @@ export default function Projects() {
                     <img 
                       src={repo.image} 
                       alt={repo.name}
-                      className="w-full h-32 object-cover border-2 border-foreground shadow-[4px_4px_0px_var(--foreground)] filter grayscale group-hover/card:grayscale-0 transition-all duration-500"
+                      className="w-full h-32 object-cover rounded-xl filter grayscale group-hover/card:grayscale-0 transition-all duration-500"
                     />
                   </CardItem>
 
@@ -66,14 +66,14 @@ export default function Projects() {
 
                   <CardItem translateZ="40" className="flex flex-wrap gap-2 mb-6">
                     {repo.tags.map(t => (
-                      <span key={t} className="text-[10px] font-black uppercase px-2 py-1 border-2 border-foreground bg-background text-foreground shadow-[2px_2px_0px_var(--foreground)]">
+                      <span key={t} className="text-[10px] font-bold uppercase px-3 py-1 border border-foreground/10 rounded-full liquid-glass bg-foreground/5 text-foreground">
                         {t}
                       </span>
                     ))}
                   </CardItem>
 
-                  <CardItem translateZ="10" className="w-full pt-4 border-t-2 border-foreground mt-auto text-right">
-                    <span className="text-[10px] font-black uppercase" style={{ color: repo.color }}>{repo.category}</span>
+                  <CardItem translateZ="10" className="w-full pt-4 border-t border-foreground/10 mt-auto text-right">
+                    <span className="text-[10px] font-bold uppercase" style={{ color: repo.color }}>{repo.category}</span>
                   </CardItem>
                 </CardBody>
               </CardContainer>

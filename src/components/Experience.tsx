@@ -14,7 +14,7 @@ export default function Experience() {
         >
           <div className="flex items-center gap-3 mb-3">
             <Briefcase size={16} className="text-secondary" />
-            <span className="text-xs font-bold uppercase tracking-widest text-secondary border-2 border-secondary px-2 py-0.5 rounded-full">Quest Log</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-secondary border border-secondary/30 px-3 py-1 rounded-full liquid-glass bg-secondary/10">Quest Log</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black uppercase text-foreground mb-3 tracking-tighter">Experience & Education</h2>
         </motion.div>
@@ -28,19 +28,19 @@ export default function Experience() {
                 initial={{ x: -30, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
-                className="liquid-glass p-6 sm:p-8 flex flex-col sm:flex-row gap-6 relative bg-background"
+                className="liquid-glass p-6 sm:p-8 flex flex-col sm:flex-row gap-6 relative"
               >
                 <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 border-2 border-foreground shadow-[3px_3px_0px_var(--foreground)] z-10 bg-background"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 border border-foreground/20 z-10 liquid-glass bg-foreground/5"
                 >
-                  <div className="w-4 h-4 rounded-sm border-2 border-foreground" style={{ background: exp.color }} />
+                  <div className="w-4 h-4 rounded-full" style={{ background: exp.color, boxShadow: `0 0 10px ${exp.color}` }} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
                     <h3 className="text-xl font-black uppercase text-foreground">{exp.role}</h3>
                     <span
-                      className="text-[10px] font-black px-3 py-1 flex-shrink-0 border-2 border-foreground shadow-[2px_2px_0px_var(--foreground)] bg-background uppercase tracking-widest"
-                      style={{ color: exp.color }}
+                      className="text-[10px] font-bold px-3 py-1 flex-shrink-0 border border-foreground/10 rounded-full liquid-glass bg-foreground/5 uppercase tracking-widest"
+                      style={{ color: exp.color, borderColor: `${exp.color}40` }}
                     >
                       {exp.type}
                     </span>
@@ -66,7 +66,7 @@ export default function Experience() {
               initial={{ x: 30, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="liquid-glass p-6 flex flex-col h-full bg-primary"
+              className="liquid-glass p-6 flex flex-col h-full glass-primary"
             >
               <div className="flex items-center gap-3 mb-6">
                 <GraduationCap size={24} className="text-primary-foreground" />
@@ -74,8 +74,8 @@ export default function Experience() {
               </div>
               <div className="space-y-6 flex-1">
                 {EDUCATION.map(edu => (
-                  <div key={edu.school} className="border-l-4 border-primary-foreground/20 pl-4 py-1">
-                    <p className="text-base font-black text-primary-foreground uppercase leading-tight">{edu.school}</p>
+                  <div key={edu.school} className="border-l-2 border-primary-foreground/30 pl-4 py-1">
+                    <p className="text-base font-bold text-primary-foreground uppercase leading-tight">{edu.school}</p>
                     <p className="text-sm font-bold text-primary-foreground/70 mt-2">{edu.degree}</p>
                     <p className="text-[10px] font-black tracking-widest uppercase text-primary-foreground/50 mt-1">{edu.period}</p>
                   </div>
@@ -88,19 +88,19 @@ export default function Experience() {
               initial={{ x: 30, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="liquid-glass p-6 bg-accent"
+              className="liquid-glass p-6 glass-accent"
             >
-              <h3 className="text-lg font-black text-accent-foreground uppercase tracking-wider mb-6">Impact Stats</h3>
+              <h3 className="text-lg font-bold text-foreground uppercase tracking-wider mb-6">Impact Stats</h3>
               <div className="space-y-4">
                 {[
                   { label: 'Designs Produced', value: '200+', icon: '🎨' },
                   { label: 'Social Media Growth', value: '200%', icon: '📈' },
                   { label: 'Event Participants', value: '100+', icon: '🤝' },
                 ].map(stat => (
-                  <div key={stat.label} className="flex items-center justify-between p-3 border-2 border-accent-foreground bg-background text-foreground shadow-[3px_3px_0px_var(--accent-foreground)]">
+                  <div key={stat.label} className="flex items-center justify-between p-3 rounded-xl liquid-glass border border-foreground/20 bg-background/40">
                     <div className="flex items-center gap-2">
                       <span className="text-lg">{stat.icon}</span>
-                      <span className="text-[10px] font-black uppercase">{stat.label}</span>
+                      <span className="text-[10px] font-bold uppercase text-foreground/80">{stat.label}</span>
                     </div>
                     <span className="font-black">{stat.value}</span>
                   </div>

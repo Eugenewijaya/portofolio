@@ -7,8 +7,8 @@ function StatCard({ label, value, icon: Icon, color, suffix = '' }: { label: str
     <div className="liquid-glass p-6 flex flex-col gap-4 cursor-default w-full bg-background group hover:-translate-y-2 hover:shadow-[8px_8px_0px_var(--foreground)] transition-all duration-300">
       <div className="flex items-center justify-between">
         <span className="text-[10px] font-black uppercase tracking-widest text-foreground/60">{label}</span>
-        <div className="p-3 border-2 border-foreground shadow-[3px_3px_0px_var(--foreground)]" style={{ background: color }}>
-          <Icon size={18} className="text-foreground" />
+        <div className="p-3 rounded-xl liquid-glass" style={{ background: `${color}30`, borderColor: color }}>
+          <Icon size={18} style={{ color }} />
         </div>
       </div>
       <div className="flex items-baseline gap-1">
@@ -26,12 +26,12 @@ function SkillProgress({ skill, level, color }: { skill: string, level: number, 
         <span className="text-foreground">{skill}</span>
         <span className="text-foreground/50">Lvl {level}</span>
       </div>
-      <div className="h-4 border-2 border-foreground bg-background p-0.5 shadow-[2px_2px_0px_var(--foreground)]">
+      <div className="h-4 rounded-full liquid-glass p-0.5 overflow-hidden">
         <motion.div 
           initial={{ width: 0 }}
           animate={{ width: `${level}%` }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="h-full bg-foreground"
+          className="h-full rounded-full"
           style={{ background: color }}
         />
       </div>
@@ -83,7 +83,7 @@ export default function Dashboard() {
         >
           <div className="flex items-center gap-3 mb-3">
             <Trophy size={16} className="text-accent" />
-            <span className="text-xs font-bold uppercase tracking-widest text-accent border-2 border-accent px-2 py-0.5 rounded-full">Player Profile</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-accent border border-accent/30 px-3 py-1 rounded-full liquid-glass bg-accent/10">Player Profile</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black uppercase text-foreground tracking-tighter">Real Growth Stats</h2>
         </motion.div>
@@ -95,10 +95,10 @@ export default function Dashboard() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="md:col-span-4 liquid-glass p-8 flex flex-col items-center text-center bg-primary text-primary-foreground"
+            className="md:col-span-4 liquid-glass p-8 flex flex-col items-center text-center glass-primary"
           >
-            <div className="w-24 h-24 border-4 border-primary-foreground bg-accent flex items-center justify-center mb-6 shadow-[4px_4px_0px_var(--primary-foreground)] rotate-3">
-              <Crown size={40} className="text-accent-foreground" />
+            <div className="w-24 h-24 rounded-2xl liquid-glass bg-accent/20 flex items-center justify-center mb-6 rotate-3 border-accent/30">
+              <Crown size={40} className="text-accent" />
             </div>
             <h3 className="text-sm font-bold uppercase tracking-widest opacity-70 mb-1">Current Level</h3>
             <div className="text-6xl font-black uppercase tracking-tighter mb-4">{currentLevel}</div>
@@ -108,7 +108,7 @@ export default function Dashboard() {
                 <span>XP Progress</span>
                 <span>{xpPercentage}%</span>
               </div>
-              <div className="h-3 border-2 border-primary-foreground bg-primary p-0.5">
+              <div className="h-3 rounded-full liquid-glass p-0.5 bg-black/10 overflow-hidden">
                 <motion.div 
                   initial={{ width: 0 }}
                   animate={{ width: `${xpPercentage}%` }}
@@ -137,7 +137,7 @@ export default function Dashboard() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="md:col-span-12 liquid-glass p-8 bg-background"
+            className="md:col-span-12 liquid-glass p-8"
           >
             <div className="flex items-center gap-3 mb-8">
               <Activity size={24} className="text-secondary" />

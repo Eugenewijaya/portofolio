@@ -22,12 +22,12 @@ export default function Sidebar({ onToggleGameMode }: { onToggleGameMode: () => 
   return (
     <>
       {/* Mobile Top Navigation Header */}
-      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-background/90 backdrop-blur-md border-b-4 border-foreground z-40 px-4 flex items-center justify-between">
+      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-background/50 backdrop-blur-md border-b border-foreground/10 z-40 px-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3">
           <img 
             src={PROFILE.avatar} 
             alt={PROFILE.name} 
-            className="w-10 h-10 rounded-full border-2 border-foreground object-cover shadow-[2px_2px_0px_var(--foreground)]"
+            className="w-10 h-10 rounded-full border border-foreground/20 object-cover shadow-lg"
           />
           <div>
             <h1 className="text-sm font-black uppercase text-foreground leading-tight">{PROFILE.name}</h1>
@@ -38,13 +38,13 @@ export default function Sidebar({ onToggleGameMode }: { onToggleGameMode: () => 
         <div className="flex items-center gap-2">
           <button
             onClick={onToggleGameMode}
-            className="px-3 py-1.5 border-2 border-foreground bg-accent text-accent-foreground shadow-[2px_2px_0px_var(--foreground)] font-black uppercase text-xs flex items-center gap-1.5 active:translate-y-0.5 active:shadow-none"
+            className="glass-btn px-3 py-1.5 text-xs flex items-center gap-1.5 bg-accent/20 border-accent/30 text-accent"
           >
             <Play size={14} /> Game
           </button>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="p-2 border-2 border-foreground bg-background text-foreground shadow-[2px_2px_0px_var(--foreground)] font-black uppercase active:translate-y-0.5 active:shadow-none"
+            className="glass-btn p-2"
             aria-label="Toggle menu"
           >
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -73,7 +73,7 @@ export default function Sidebar({ onToggleGameMode }: { onToggleGameMode: () => 
         }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
         className={`fixed left-0 top-0 h-screen w-64 liquid-glass z-50 rounded-none border-t-0 border-b-0 border-l-0 flex flex-col justify-between py-8 overflow-y-auto ${
-          mobileOpen ? 'shadow-[8px_0px_0px_var(--foreground)]' : ''
+          mobileOpen ? 'shadow-2xl' : ''
         }`}
       >
       <div className="px-6 flex flex-col gap-10">
@@ -83,9 +83,9 @@ export default function Sidebar({ onToggleGameMode }: { onToggleGameMode: () => 
             <img 
               src={PROFILE.avatar} 
               alt={PROFILE.name} 
-              className="w-20 h-20 rounded-full border-4 border-foreground object-cover shadow-[4px_4px_0px_var(--foreground)] group-hover:scale-105 transition-transform"
+              className="w-20 h-20 rounded-full border border-foreground/20 object-cover shadow-xl group-hover:scale-105 transition-transform"
             />
-            <div className="absolute -bottom-2 -right-2 bg-accent text-accent-foreground px-2 py-0.5 text-[10px] font-black uppercase border-2 border-foreground shadow-[2px_2px_var(--foreground)] rotate-12 group-hover:rotate-0 transition-transform">
+            <div className="absolute -bottom-2 -right-2 liquid-glass bg-accent/80 text-accent-foreground px-2 py-0.5 text-[10px] font-black uppercase rotate-12 group-hover:rotate-0 transition-transform">
               Lv. {realisticLevel}
             </div>
           </div>
@@ -128,14 +128,14 @@ export default function Sidebar({ onToggleGameMode }: { onToggleGameMode: () => 
       <div className="px-6 mt-10 flex flex-col gap-4">
         <button 
           onClick={onToggleGameMode}
-          className="p-3 border-4 border-foreground bg-accent text-accent-foreground shadow-[4px_4px_0px_var(--foreground)] hover:translate-y-1 hover:shadow-[0px_0px_0px_var(--foreground)] transition-all font-black uppercase text-sm flex justify-center items-center gap-2 group"
+          className="glass-btn flex justify-center items-center gap-2 group text-sm"
         >
           <Play size={16} className="group-hover:rotate-12 transition-transform" />
           Enter Game Mode
         </button>
 
-        <div className="p-4 border-2 border-foreground bg-primary text-primary-foreground text-xs font-bold shadow-[4px_4px_0px_var(--foreground)] uppercase text-center relative overflow-hidden group">
-          <div className="absolute inset-0 bg-secondary translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+        <div className="liquid-glass p-4 text-xs font-bold uppercase text-center relative overflow-hidden group">
+          <div className="absolute inset-0 bg-secondary/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
           <span className="relative z-10 flex items-center justify-center gap-2">
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
             Online & Ready

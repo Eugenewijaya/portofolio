@@ -105,14 +105,14 @@ export default function GameMode({ onClose }: { onClose: () => void }) {
       <div className="absolute top-6 right-6 flex items-center gap-4 z-10">
         <button 
           onClick={onClose}
-          className="p-3 bg-accent text-accent-foreground border-4 border-foreground shadow-[4px_4px_0px_var(--foreground)] hover:translate-y-1 hover:shadow-[0px_0px_0px_var(--foreground)] transition-all font-black uppercase text-sm flex items-center gap-2"
+          className="glass-btn flex items-center gap-2 text-sm"
         >
           <X size={16} /> Exit Game Mode
         </button>
       </div>
 
-      <div className="absolute top-4 left-4 right-16 md:right-auto z-10 liquid-glass p-3 sm:p-4 bg-background max-w-xs">
-        <h2 className="text-base sm:text-xl font-black uppercase text-foreground mb-0.5">Evid's World</h2>
+      <div className="absolute top-4 left-4 right-16 md:right-auto z-10 liquid-glass p-3 sm:p-4 bg-background/50 max-w-xs">
+        <h2 className="text-base sm:text-xl font-bold uppercase text-foreground mb-0.5">Evid's World</h2>
         <p className="text-[10px] sm:text-xs font-bold text-foreground/70 uppercase">Use W A S D or Arrows / D-Pad to move.</p>
         <p className="text-[10px] sm:text-xs font-bold text-foreground/70 uppercase">Press SPACE or 'A' near a building to enter.</p>
       </div>
@@ -121,7 +121,7 @@ export default function GameMode({ onClose }: { onClose: () => void }) {
       <div className="w-full flex items-center justify-center p-2 overflow-hidden my-auto">
         <div 
           ref={containerRef}
-          className="relative bg-primary/20 border-4 border-foreground shadow-[8px_8px_0px_var(--foreground)] scale-[0.42] xs:scale-[0.55] sm:scale-[0.75] md:scale-100 transform origin-center transition-transform"
+          className="relative glass-primary border border-foreground/20 rounded-2xl liquid-glass scale-[0.42] xs:scale-[0.55] sm:scale-[0.75] md:scale-100 transform origin-center transition-transform"
           style={{ 
             width: MAP_WIDTH * TILE_SIZE, 
             height: MAP_HEIGHT * TILE_SIZE,
@@ -134,7 +134,7 @@ export default function GameMode({ onClose }: { onClose: () => void }) {
           {BUILDINGS.map(b => (
             <div
               key={b.id}
-              className="absolute border-4 border-foreground shadow-[4px_4px_0px_var(--foreground)] flex items-center justify-center flex-col transition-all"
+              className="absolute liquid-glass border border-foreground/20 rounded-xl flex items-center justify-center flex-col transition-all"
               style={{
                 left: b.pos.x * TILE_SIZE,
                 top: b.pos.y * TILE_SIZE,
@@ -146,9 +146,9 @@ export default function GameMode({ onClose }: { onClose: () => void }) {
                 zIndex: 10
               }}
             >
-              <span className="font-black uppercase text-[10px] sm:text-xs text-foreground bg-background px-1 border-2 border-foreground">{b.name}</span>
+              <span className="font-bold uppercase text-[10px] sm:text-xs text-foreground glass-primary px-2 rounded-full border border-foreground/20">{b.name}</span>
               {activeBuilding?.id === b.id && (
-                <span className="absolute -top-6 bg-background text-foreground px-2 py-0.5 text-[8px] font-black uppercase border-2 border-foreground whitespace-nowrap animate-bounce">
+                <span className="absolute -top-6 liquid-glass bg-accent/80 text-foreground px-2 py-0.5 rounded-full text-[8px] font-bold uppercase whitespace-nowrap animate-bounce border border-accent/20">
                   Press Space!
                 </span>
               )}
@@ -194,9 +194,9 @@ export default function GameMode({ onClose }: { onClose: () => void }) {
       {/* Mobile D-Pad (Visible only on small screens) */}
       <div className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 grid grid-cols-3 gap-1.5 z-20">
         <div />
-        <button onClick={() => movePlayer(0, -1)} onTouchStart={(e) => { e.preventDefault(); movePlayer(0, -1) }} className="p-3 bg-background border-4 border-foreground shadow-[3px_3px_0px_var(--foreground)] active:translate-y-1 active:shadow-none"><ArrowUp size={20} /></button>
+        <button onClick={() => movePlayer(0, -1)} onTouchStart={(e) => { e.preventDefault(); movePlayer(0, -1) }} className="p-3 glass-btn"><ArrowUp size={20} /></button>
         <div />
-        <button onClick={() => movePlayer(-1, 0)} onTouchStart={(e) => { e.preventDefault(); movePlayer(-1, 0) }} className="p-3 bg-background border-4 border-foreground shadow-[3px_3px_0px_var(--foreground)] active:translate-y-1 active:shadow-none"><ArrowLeft size={20} /></button>
+        <button onClick={() => movePlayer(-1, 0)} onTouchStart={(e) => { e.preventDefault(); movePlayer(-1, 0) }} className="p-3 glass-btn"><ArrowLeft size={20} /></button>
         <button onClick={() => {
             if (activeBuilding) {
               navigate(activeBuilding.path)
@@ -210,13 +210,13 @@ export default function GameMode({ onClose }: { onClose: () => void }) {
               onClose()
             }
           }}
-          className="p-3 bg-accent text-accent-foreground border-4 border-foreground shadow-[3px_3px_0px_var(--foreground)] active:translate-y-1 active:shadow-none font-black text-xs uppercase"
+          className="p-3 glass-btn font-bold text-xs uppercase text-accent bg-accent/10 border-accent/30"
         >
           A
         </button>
-        <button onClick={() => movePlayer(1, 0)} onTouchStart={(e) => { e.preventDefault(); movePlayer(1, 0) }} className="p-3 bg-background border-4 border-foreground shadow-[3px_3px_0px_var(--foreground)] active:translate-y-1 active:shadow-none"><ArrowRight size={20} /></button>
+        <button onClick={() => movePlayer(1, 0)} onTouchStart={(e) => { e.preventDefault(); movePlayer(1, 0) }} className="p-3 glass-btn"><ArrowRight size={20} /></button>
         <div />
-        <button onClick={() => movePlayer(0, 1)} onTouchStart={(e) => { e.preventDefault(); movePlayer(0, 1) }} className="p-3 bg-background border-4 border-foreground shadow-[3px_3px_0px_var(--foreground)] active:translate-y-1 active:shadow-none"><ArrowDown size={20} /></button>
+        <button onClick={() => movePlayer(0, 1)} onTouchStart={(e) => { e.preventDefault(); movePlayer(0, 1) }} className="p-3 glass-btn"><ArrowDown size={20} /></button>
         <div />
       </div>
 
