@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState } from 'react'
+import { LanguageProvider } from './context/i18n'
 import './index.css'
 import Sidebar from './components/Sidebar'
 import Hero from './components/Hero'
@@ -9,8 +9,6 @@ import About from './components/About'
 import Experience from './components/Experience'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
-import GameMode from './components/GameMode'
-
 function PageTransition({ children }: { children: React.ReactNode }) {
   const location = useLocation()
   return (
@@ -30,32 +28,31 @@ function PageTransition({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const [isGameMode, setIsGameMode] = useState(false)
-
   return (
-    <Router>
-      <div className="relative min-h-screen flex">
-        {/* Colorful animated mesh background */}
-        <div className="bg-mesh" />
-        <div className="bg-blob-3" />
+    <LanguageProvider>
+      <Router>
+        <div className="relative min-h-screen flex">
+          {/* Background layers */}
+          <div className="bg-mesh" />
+          <div className="bg-blob-3" />
 
-        <Sidebar onToggleGameMode={() => setIsGameMode(true)} />
-        
-        {/* Main Content Area - padded left by sidebar width on desktop, top padded on mobile */}
-        <main className="flex-1 ml-0 md:ml-64 p-4 sm:p-6 pt-20 md:pt-6 min-h-screen max-w-full overflow-x-hidden">
-          <Routes>
-            <Route path="/" element={<PageTransition><Hero /></PageTransition>} />
-            <Route path="/stats" element={<PageTransition><Dashboard /></PageTransition>} />
-            <Route path="/about" element={<PageTransition><About /></PageTransition>} />
-            <Route path="/experience" element={<PageTransition><Experience /></PageTransition>} />
-            <Route path="/projects" element={<PageTransition><Projects /></PageTransition>} />
-            <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
-          </Routes>
-        </main>
-
-        {/* Game Mode Overlay */}
-        {isGameMode && <GameMode onClose={() => setIsGameMode(false)} />}
-      </div>
-    </Router>
+          <Sidebar />
+          
+          {/* Main Content Area - padded left by sidebar width on desktop, top padded on mobile */}
+          <main className="flex-1 ml-0 md:ml-64 p-4 sm:p-6 pt-20 md:pt-6 min-h-screen max-w-full overflow-x-hidden">
+            <AnimatePresence mode="wait">
+              <Routes>
+                <Route path="/" element={<PageTransition><Hero /></PageTransition>} />
+                <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
+                <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+                <Route path="/experience" element={<PageTransition><Experience /></PageTransition>} />
+                <Route path="/projects" element={<PageTransition><Projects /></PageTransition>} />
+                <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+              </Routes>
+            </AnimatePresence>
+          </main>
+        </div>
+      </Router>
+    </LanguageProvider>
   )
 }

@@ -2,8 +2,12 @@ import { motion } from 'framer-motion'
 import { MapPin, ArrowRight, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { PROFILE } from '../data'
+import { useLanguage } from '../context/i18n'
 
 export default function Hero() {
+  const { language, t } = useLanguage()
+  const currentProfile = PROFILE[language as keyof typeof PROFILE] || PROFILE['en']
+
   return (
     <section className="relative min-h-[calc(100vh-5rem)] flex flex-col justify-center py-4 md:py-12">
       <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-6 md:auto-rows-[200px] auto-rows-auto">
@@ -21,9 +25,9 @@ export default function Hero() {
             </span>
           </div>
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9] mt-8">
-            <span className="text-foreground">Evid</span>
+            <span className="text-foreground">{currentProfile.name.split(' ')[0]}</span>
             <br />
-            <span className="text-accent">Wijaya</span>
+            <span className="text-accent">{currentProfile.name.split(' ').slice(1).join(' ')}</span>
           </h1>
         </motion.div>
 
@@ -35,8 +39,8 @@ export default function Hero() {
           className="liquid-glass md:col-span-1 md:row-span-1 p-4 flex items-center justify-center relative overflow-hidden group min-h-[220px] max-h-[300px] md:max-h-none"
         >
           <img
-            src={PROFILE.avatar}
-            alt={PROFILE.name}
+            src={currentProfile.avatar}
+            alt={currentProfile.name}
             className="w-full h-full object-cover rounded-xl filter grayscale group-hover:grayscale-0 transition-all duration-500"
             loading="eager"
           />
@@ -60,7 +64,7 @@ export default function Hero() {
           <MapPin size={32} className="text-primary-foreground group-hover:animate-bounce" />
           <div>
             <p className="text-[10px] font-bold text-foreground/70 uppercase mb-1 tracking-widest">Base Camp</p>
-            <p className="text-xl font-bold text-foreground uppercase leading-tight">{PROFILE.location}</p>
+            <p className="text-xl font-bold text-foreground uppercase leading-tight">{currentProfile.location}</p>
           </div>
         </motion.div>
 
@@ -72,7 +76,7 @@ export default function Hero() {
           className="liquid-glass md:col-span-2 md:row-span-1 p-8 flex flex-col justify-center glass-secondary"
         >
           <p className="text-foreground text-lg sm:text-xl font-bold leading-tight uppercase">
-            Final-year IS student · Graphic Designer at Star Champs Indonesia · Commissioner at Sagara Karya Kreanusati
+            {currentProfile.title}
           </p>
         </motion.div>
 
@@ -84,7 +88,7 @@ export default function Hero() {
           className="liquid-glass md:col-span-2 md:row-span-1 p-6 flex flex-col justify-center"
         >
           <div className="flex flex-wrap gap-3">
-            {['Graphic Designer', 'Cloud Computing', 'System Analyst', 'Event Organizer'].map((tag) => (
+            {currentProfile.skills.slice(0, 4).map((tag: string) => (
               <span
                 key={tag}
                 className="px-4 py-2 text-xs font-bold uppercase rounded-full liquid-glass bg-foreground/5 hover:-translate-y-1 hover:bg-foreground/10 transition-all cursor-default"
@@ -107,7 +111,7 @@ export default function Hero() {
             className="flex flex-col items-center gap-3"
           >
             <Sparkles size={40} className="group-hover:rotate-12 transition-transform duration-300" />
-            <span className="font-bold uppercase text-lg text-center leading-tight">View<br/>Inventory</span>
+            <span className="font-bold uppercase text-lg text-center leading-tight">{t('nav.inventory')}</span>
           </motion.div>
         </Link>
 
@@ -123,7 +127,7 @@ export default function Hero() {
             className="flex flex-col items-center gap-3"
           >
             <ArrowRight size={40} className="text-foreground group-hover:translate-x-2 transition-transform duration-300" />
-            <span className="font-bold uppercase text-lg text-center leading-tight">Player<br/>Stats</span>
+            <span className="font-bold uppercase text-lg text-center leading-tight">{t('btn.next')}<br/>{t('nav.stats')}</span>
           </motion.div>
         </Link>
 

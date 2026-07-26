@@ -1,9 +1,14 @@
 import { motion } from 'framer-motion'
 import { PROJECTS } from '../data'
-import { ExternalLink, Layers } from 'lucide-react'
+import { ExternalLink, Layers, ArrowRight } from 'lucide-react'
 import { CardContainer, CardBody, CardItem } from './ui/3d-card'
+import { Link } from 'react-router-dom'
+import { useLanguage } from '../context/i18n'
 
 export default function Projects() {
+  const { language, t } = useLanguage()
+  const currentProjects = PROJECTS[language as keyof typeof PROJECTS] || PROJECTS['en']
+
   return (
     <section className="relative py-12 h-full flex flex-col justify-center">
       <div className="max-w-6xl mx-auto w-full">
@@ -15,14 +20,17 @@ export default function Projects() {
         >
           <div className="flex items-center gap-3 mb-3">
             <Layers size={16} className="text-secondary" />
-            <span className="text-xs font-bold uppercase tracking-widest text-secondary border border-secondary/30 px-3 py-1 rounded-full liquid-glass bg-secondary/10">Inventory</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-secondary border border-secondary/30 px-3 py-1 rounded-full liquid-glass bg-secondary/10">
+              Inventory
+            </span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black uppercase text-foreground mb-3 tracking-tighter">My Quests & Loot</h2>
-          <p className="text-foreground/70 font-bold max-w-xl">Hover over the cards to interact with the 3D gallery.</p>
+          <h2 className="text-3xl sm:text-5xl font-black uppercase text-foreground mb-3 tracking-tighter">
+            {t('projects.title')}
+          </h2>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {PROJECTS.map((repo, i) => (
+          {currentProjects.map((repo, i) => (
             <motion.div
               key={repo.id}
               initial={{ y: 20, opacity: 0 }}
@@ -80,6 +88,24 @@ export default function Projects() {
             </motion.div>
           ))}
         </div>
+
+        {/* Pagination Next */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="mt-12 flex justify-end"
+        >
+          <Link to="/contact" className="liquid-glass px-6 py-4 flex items-center gap-4 group hover:bg-accent/10 transition-colors no-underline">
+            <div className="text-right">
+              <span className="block text-[10px] font-bold uppercase tracking-widest text-foreground/50 mb-1">{t('btn.next')}</span>
+              <span className="block text-lg font-black uppercase text-foreground">{t('nav.connect')}</span>
+            </div>
+            <div className="w-12 h-12 rounded-full glass-accent flex items-center justify-center group-hover:translate-x-2 transition-transform">
+              <ArrowRight size={24} className="text-foreground" />
+            </div>
+          </Link>
+        </motion.div>
       </div>
     </section>
   )

@@ -1,9 +1,14 @@
 import { motion } from 'framer-motion'
 import { PROFILE } from '../data'
-import { Mail, ExternalLink, Send } from 'lucide-react'
+import { Mail, ExternalLink, Send, ArrowRight } from 'lucide-react'
 import { Github, Linkedin } from './Icons'
+import { Link } from 'react-router-dom'
+import { useLanguage } from '../context/i18n'
 
 export default function Contact() {
+  const { language, t } = useLanguage()
+  const currentProfile = PROFILE[language as keyof typeof PROFILE] || PROFILE['en']
+
   return (
     <section className="relative py-12 h-full flex flex-col justify-center">
       <div className="max-w-6xl mx-auto w-full relative z-10">
@@ -15,11 +20,15 @@ export default function Contact() {
         >
           <div className="flex items-center gap-3 mb-3">
             <Send size={16} className="text-primary" />
-            <span className="text-xs font-bold uppercase tracking-widest text-primary border border-primary/30 px-3 py-1 rounded-full liquid-glass bg-primary/10">Comms Channel</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-primary border border-primary/30 px-3 py-1 rounded-full liquid-glass bg-primary/10">
+              Comms Channel
+            </span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black uppercase text-foreground mb-3 tracking-tighter">Get In Touch</h2>
+          <h2 className="text-3xl sm:text-5xl font-black uppercase text-foreground mb-3 tracking-tighter">
+            {t('contact.title')}
+          </h2>
           <p className="text-foreground/70 font-medium max-w-xl">
-            Ready to start a new quest? Drop me a message to collaborate!
+            {t('contact.desc')}
           </p>
         </motion.div>
 
@@ -34,8 +43,8 @@ export default function Contact() {
             {[
               {
                 label: 'Email',
-                value: PROFILE.email,
-                href: `mailto:${PROFILE.email}`,
+                value: currentProfile.email,
+                href: `mailto:${currentProfile.email}`,
                 icon: Mail,
                 color: '#6366f1',
                 bg: 'glass-primary',
@@ -44,7 +53,7 @@ export default function Contact() {
               {
                 label: 'LinkedIn',
                 value: 'evid-wijaya',
-                href: PROFILE.linkedin,
+                href: currentProfile.linkedin,
                 icon: Linkedin,
                 color: '#0A66C2',
                 bg: 'glass-secondary',
@@ -53,7 +62,7 @@ export default function Contact() {
               {
                 label: 'GitHub',
                 value: 'Eugenewijaya',
-                href: PROFILE.github,
+                href: currentProfile.github,
                 icon: Github,
                 color: '#f4f4f5',
                 bg: 'glass-accent',
@@ -62,7 +71,7 @@ export default function Contact() {
               {
                 label: 'Portfolio',
                 value: 'sites.google.com/view/evidwijaya',
-                href: PROFILE.portfolio,
+                href: currentProfile.portfolio,
                 icon: ExternalLink,
                 color: '#10b981',
                 bg: 'bg-background/20',
@@ -105,20 +114,38 @@ export default function Contact() {
               <div className="w-16 h-16 rounded-2xl border border-foreground/20 glass-primary liquid-glass shadow-lg flex items-center justify-center mb-8">
                 <Send size={28} className="text-primary-foreground" />
               </div>
-              <h3 className="text-3xl font-black uppercase text-foreground mb-4">Have a project in mind?</h3>
+              <h3 className="text-3xl font-black uppercase text-foreground mb-4">{t('contact.ctaTitle')}</h3>
               <p className="text-foreground/70 text-base font-bold leading-relaxed mb-8 max-w-md border-l-2 border-accent pl-4">
-                Whether you need graphic design, a web system, an event organized, or cloud infrastructure — I'm here to help you make it happen with quality and creativity.
+                {t('contact.ctaDesc')}
               </p>
             </div>
             <a
-              href={`mailto:${PROFILE.email}`}
+              href={`mailto:${currentProfile.email}`}
               className="glass-btn text-lg w-full flex items-center justify-center gap-3 py-5"
             >
               <Mail size={20} />
-              Send me an Email
+              {t('contact.btn')}
             </a>
           </motion.div>
         </div>
+
+        {/* Pagination Next */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="mt-12 flex justify-end"
+        >
+          <Link to="/" className="liquid-glass px-6 py-4 flex items-center gap-4 group hover:bg-accent/10 transition-colors no-underline">
+            <div className="text-right">
+              <span className="block text-[10px] font-bold uppercase tracking-widest text-foreground/50 mb-1">{t('btn.next')}</span>
+              <span className="block text-lg font-black uppercase text-foreground">{t('nav.home')}</span>
+            </div>
+            <div className="w-12 h-12 rounded-full glass-accent flex items-center justify-center group-hover:translate-x-2 transition-transform">
+              <ArrowRight size={24} className="text-foreground" />
+            </div>
+          </Link>
+        </motion.div>
 
         {/* Footer */}
         <motion.div
@@ -129,11 +156,11 @@ export default function Contact() {
         >
           <span>© {new Date().getFullYear()} Evid Wijaya. All rights reserved.</span>
           <div className="flex items-center gap-4">
-            <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors cursor-pointer">GitHub</a>
-            <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors cursor-pointer">LinkedIn</a>
-            <a href={PROFILE.portfolio} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors cursor-pointer">Portfolio</a>
+            <a href={currentProfile.github} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors cursor-pointer">GitHub</a>
+            <a href={currentProfile.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors cursor-pointer">LinkedIn</a>
+            <a href={currentProfile.portfolio} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors cursor-pointer">Portfolio</a>
           </div>
-          <span>Built with React + Tailwind v4 + Gamification</span>
+          <span>Built with React + Tailwind v4 + Liquid Glass</span>
         </motion.div>
       </div>
     </section>
